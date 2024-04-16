@@ -24,7 +24,7 @@ A figura 1 mostra um exemplo de *issue*.
 <center>
 
 **Figura 1** Exemplo de issue
-![Exemplo de Issue](../assets/politica1.png)
+![Exemplo de Issue](../assets/planejamento/ExemploIssue.PNG)
 **Fonte**: página GitHub
 
 </center>
@@ -52,10 +52,9 @@ a operação ou recusando. Se houver uma issue relacionada a essa branch, quando
 for aceito, a *issue* automaticamente será fechada.
 
 ## Bibliografia
->About issues. **Github Docs**, disponível em: <https://docs.github.com/en/issues/tracking-your-work-with-issues/about-issues> Acesso emm: 29 de setembro 2023<br/>
-> gitglossary. **Git**, Disponível em: <https://git-scm.com/docs/gitglossary> Acesso em: 29 de setembro 2023 <br/>
-> Sobre solicitação de pull, **GitHub Docs**, disponível em:
-<https://docs.github.com/pt/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests> Acesso em: 29 de setembro 2023<br/>
+>About issues. **Github Docs**, disponível em: <https://docs.github.com/en/issues/tracking-your-work-with-issues/about-issues> Acesso em: 07 de abril de 2024<br/>
+> gitglossary. **Git**, Disponível em: <https://git-scm.com/docs/gitglossary> Acesso em: 07 de abril de 2024 <br/>
+
 
 ## 📑 Histórico de versão
 
