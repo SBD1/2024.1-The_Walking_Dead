@@ -1,2 +1,2 @@
 - [Home](/)
-- [Licenses](/Licenses/MIT.md)
+- [Licenses](LICENSE)
