@@ -20,8 +20,8 @@
 
 * Modelagem 
 
-  - [Diagrama Entidade Relacionamento]()
-  - [Modelo Entidade Relacionamento]()
-  - [Modelo Relacional]()
-  - [Dicionário de Dados]()
+  - [Diagrama Entidade Relacionamento](/Modelagem/DER.md)
+  - [Modelo Entidade Relacionamento](/Modelagem/MER.md)
+  - [Modelo Relacional](/Modelagem/MREL.md)
+  - [Dicionário de Dados](/Modelagem/DD.md)
   
