@@ -1,5 +1,8 @@
 # 🧟 The Walking Dead
 
+<p align="center"><img src="docs/assets/ventoy-logo-4k (1).png" width="100%"></p>
+
+
 ## Sobre o Projeto
 
 Este repositório é dedicada ao desenvolvimento do Jogo inspirado na famosa serie de televisão [The Walking Dead](https://www.youtube.com/watch?v=6Z6ijZa3EXw)  da turma de sistema de banco de dados 1 da Faculdade do Gama - Universidade de Brasília (FGA-UnB) durante o 1º semestre de 2024. O objetivo do projeto é aplicar os conceitos aprendidos em sala de aula sobre banco de dados na criação de jogo no estilo RPG.
