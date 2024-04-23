@@ -1,6 +1,6 @@
 # 🧟 The Walking Dead
 
-![logo](/assets/planejamento/The-Walking-Dead.jpg)
+![logo](assets/planejamento/The-Walking-Dead.jpg)
 
 
 ## Sobre o Projeto
