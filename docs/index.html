@@ -1,23 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Document</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="description" content="Description">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+    <meta charset="UTF-8">
+    <title>The Walking Dead</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="description" content="Description">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+    <link rel="shortcut icon" href="/assets/planejamento/The-Walking-Dead.jpg" type="image/x-icon">
+    <style>
+        .cover {
+            background-image: url('/assets/planejamento/Fundo') !important;
+            background-size: cover !important;
+            background-repeat: no-repeat !important;
+        }
+    </style>
 </head>
+
 <body>
-  <div id="app"></div>
-  <script>
-    window.$docsify = {
-      loadSidebar: true,
-      name: 'The Walking Dead',
-      repo: 'https://github.com/SBD1/2024.1-The_Walking_Dead'
-    }
-  </script>
-  <!-- Docsify v4 -->
-  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+    <div id="app"></div>
+    <script>
+        window.$docsify = {
+            homepage: '_home.md',
+            themeColor: '#0098CC',
+            auto2top: true,
+            coverpage: true,
+            loadSidebar: true,
+            subMaxLevel: 1,
+            logo: '/assets/planejamento/The-Walking-Dead.jpg',
+            name: 'The Walking Dead',
+            repo: 'https://github.com/SBD1/2024.1-The_Walking_Dead'
+        }
+    </script>
+    <!-- Docsify v4 -->
+    <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+
+    <!-- plugins -->
+    <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
 </body>
+
 </html>
