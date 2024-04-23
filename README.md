@@ -9,6 +9,10 @@ Este repositório é dedicada ao desenvolvimento do Jogo inspirado na famosa ser
 
 ## 🎮 Sobre o Jogo
 
+O mundo foi atingido por uma terrível pandemia, transformando a maioria da população em mortos-vivos famintos por carne humana. Entre os sobreviventes está um grupo diversificado de pessoas, cada uma lutando para encontrar seu lugar em um mundo pós-apocalíptico onde a linha entre a humanidade e a selvageria está cada vez mais tênue.
+
+O jogador assume o papel de um sobrevivente recentemente desperto em meio ao caos. Sem memória de como o mundo chegou a esse ponto, eles se encontram sozinhos e desamparados em uma cidade devastada, cercada por hordas de zumbis e ameaças humanas igualmente perigosas.
+
 ## :interrobang: Como jogar?
 
 ## :handshake: Colaboradores
