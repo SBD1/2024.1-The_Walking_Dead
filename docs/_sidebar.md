@@ -10,7 +10,6 @@
   - [Ferramentas](/Planejamento/Ferramentas.md)
   - [Metodologia](/Planejamento/Metodologia.md)
   - [Política](/Planejamento/Politica.md)
-  - [License](../LICENSE)
  
     
 * Apresentações
