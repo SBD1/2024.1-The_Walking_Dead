@@ -8,10 +8,9 @@ A **Tabela 1** detalha as ferramentas que utilizamos durante todo o projeto:
 
 ## Ferramentas 
 
-<center>
+<center> 
   
-**Tabela 1 - Ferramentas Utilizadas**
-
+**Tabela 1** - Ferramentas Utilizadas
 
 | Ferramenta | Nome | Finalidade |
 |------------|------|------------|
@@ -20,7 +19,6 @@ A **Tabela 1** detalha as ferramentas que utilizamos durante todo o projeto:
 | ![GoogleMeet](../assets/planejamento/GoogleMeet.png)| Google Meet | Plataforma para realização das reuniões do projeto. |
 | ![LucidChart](../assets/planejamento/lucidchart.png)| Lucidchart | Plataforma para criação dos diagramas de entidade-relacionamento |
   
-
 </center>
 
 
