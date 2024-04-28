@@ -16,10 +16,10 @@ A **Tabela 1** detalha as ferramentas que utilizamos durante todo o projeto:
 
 | Ferramenta | Nome | Finalidade |
 |------------|------|------------|
-| ![](../assets/planejamento/github.png)| GitHub | Serve para controle de versão e colaboração em projetos, com rastreamento de alterações e revisão de código, facilitando a colaboração organizada. |
-| ![](../assets/planejamento/whatsapp.png) | WhatsApp | Plataforma de mensagens para comunicação rápida e direta entre membros da equipe. |
-| ![](../assets/planejamento/GoogleMeet.png)| Google Meet | Plataforma para realização das reuniões do projeto. |
-| ![](../assets/planejamento/lucidchart.png)| Lucidchart | Plataforma para criação dos diagramas de entidade-relacionamento |
+| ![GitHub](../assets/planejamento/github.png)| GitHub | Serve para controle de versão e colaboração em projetos, com rastreamento de alterações e revisão de código, facilitando a colaboração organizada. |
+| ![Whatsapp](../assets/planejamento/whatsapp.png) | WhatsApp | Plataforma de mensagens para comunicação rápida e direta entre membros da equipe. |
+| ![GoogleMeet](../assets/planejamento/GoogleMeet.png)| Google Meet | Plataforma para realização das reuniões do projeto. |
+| ![LucidChart](../assets/planejamento/lucidchart.png)| Lucidchart | Plataforma para criação dos diagramas de entidade-relacionamento |
   
 
 </center>
