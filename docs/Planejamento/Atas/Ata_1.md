@@ -143,7 +143,7 @@ A próxima reunião ficou marcada para o dia 12/04/2024, às 21:00.
     <tr>
       <td>1</td>
       <td>Responsável pela elaboração do diagrama de entidade-relacionamento das entidades de item e mapa</td>
-      <td>[Mayara A. Oliveira](https://github.com/Mayara-tech</td>
+      <td>[Mayara A. Oliveira](https://github.com/Mayara-tech)</td>
       <td>12/04</td>
     </tr>
     <tr>
