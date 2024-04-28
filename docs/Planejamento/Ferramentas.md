@@ -8,11 +8,8 @@ A **Tabela 1** detalha as ferramentas que utilizamos durante todo o projeto:
 
 ## Ferramentas 
 
-<center>
-  
-  **Tabela 1** - Ferramentas Utilizadas
-  
-</center>
+<p align="center"><strong>Tabela 1 - Ferramentas Utilizadas</strong></p>
+
 <center>
 
 | Ferramenta | Nome | Finalidade |
