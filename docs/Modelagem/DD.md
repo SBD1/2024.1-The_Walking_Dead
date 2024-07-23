@@ -28,11 +28,11 @@ A abordagem empregada na construção do dicionário de dados foi a seguinte:
 | :--------------------: | :----------: | :---------------------------------------------------: | :----------------: | :--------------------: | :------: | ----------------- |
 |       nome             |  varchar[60] |      Nome do equipamento                              |      a-z, A-Z      |          não           |          |                   |
 |        ID              |      int     | código de identificação do item                       |         1-9        |          não           |    PK    |                   |
-|     Descrição          | varchar [200]| identifica se o aluno é de graduação ou pós-graduação |      1-100         |          não           |          |                   |
-|      Durabilidade      |      int     |Indica quantos ataques o equipamento resistirá/realizará|      a-z, A-Z     |          não           |          |                   |
+|     Descrição          | varchar [200]| Descreve como o item é, se é uma ferramenta, uma arma, um remédio, etc. |      a-z,A-Z        |          não           |          |                   |
+|      Durabilidade      |      int     |Indica quantos ataques o equipamento resistirá/realizará|      1 - 100     |          não           |          |                   |
 | Pode de ataque / defesa|      int     |Indica o poder de ataque ou de defesa do equipamento   |      1 - 500       |          não           |          |                   |
-|     Estado             |      int     | Indica se o equipamento está danificado, com/sem munição, estragado, etc.  | 1 - 9 | não            |          |                   |
-|     Valor              |      int     | Indica o valor de venda ou de compra do equipamento   |      a-z, A-Z      |          sim           |          |                   |
+|     Estado             |      varchar [200]    | Indica se o equipamento está danificado, com/sem munição, estragado, etc.  | a-z, A-Z | não            |          |                   |
+|     Valor              |      int     | Indica o valor de venda ou de compra do equipamento   |      1 - 5000      |          sim           |          |                   |
 |     Localização        | varchar [60] | Indica onde o equipamento está localizado             |      a-z, A-Z      |          sim           |    FK    |                   |
 
 ## Entidade: Personagem
