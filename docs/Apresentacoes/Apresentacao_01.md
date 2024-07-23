@@ -6,11 +6,7 @@ O propósito desta página consiste em arquivar os elementos pertinentes à prim
 
 ## Apresentação 1
 
-<p style="text-align: center"><a href="https:" target="blanket">Vídeo apresentação 1</a></p>
-
-<p style="text-align: center"><iframe width="560" height="315" src="https:" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></p>
-
-<font size="3"><p style="text-align: center">Fonte: Autores.</p></font>
+<p style="text-align: center"><a href="https://youtu.be/6U2Rk_x7cZg" target="blanket">Vídeo apresentação 1</a></p>
 
 ## Aspectos avaliados na apresentação
 <p align="center"><b>Tabela 01</b> - Aspectos avaliados na entrega 1 </p>
@@ -31,4 +27,5 @@ Correção | responsável |
 
 Versão  |   Data   | Descrição | Autor(es) 
 --------- | ------ | ------ | ----------
-`1.0` | 23/04/2024| Criação da página de apresentação 1 | [Mayara Alves](https://github.com/Mayara-tech) 
+`1.0` | 23/04/2024| Criação da página de apresentação 1 | [Mayara Alves](https://github.com/Mayara-tech)
+`1.1` | 22/07/2024| Adição do link do vídeo de apresentação | [Matheus Oliveira](https://github.com/matheusfga)
