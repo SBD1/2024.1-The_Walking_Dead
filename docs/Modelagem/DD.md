@@ -75,7 +75,7 @@ A abordagem empregada na construção do dicionário de dados foi a seguinte:
 
 #### Descrição: A entidade Missão descreve as missões que guiarão o jogador a algum objetivo do jogo.
 
-#### Observação: Essa tabela possui chave estrangeira da entidade `Localização`.
+#### Observação: 
 
 | Nome Variável          |     Tipo     |            Descrição                                  | Valores permitidos | Permite valores nulos? | É chave? | Outras Restrições |
 | :--------------------: | :----------: | :---------------------------------------------------: | :----------------: | :--------------------: | :------: | ----------------- |
@@ -88,7 +88,7 @@ A abordagem empregada na construção do dicionário de dados foi a seguinte:
 
 #### Descrição: A entidade Item descreve os itens que o usuário poderá encontrar no mapa ou em seu inventário
 
-#### Observação: Essa tabela possui chave estrangeira da entidade ``.
+#### Observação: Essa tabela possui chave estrangeira da entidade `Mapa`.
 
 | Nome Variável          |     Tipo     |            Descrição                                  | Valores permitidos | Permite valores nulos? | É chave? | Outras Restrições |
 | :--------------------: | :----------: | :---------------------------------------------------: | :----------------: | :--------------------: | :------: | ----------------- |
@@ -109,7 +109,7 @@ A abordagem empregada na construção do dicionário de dados foi a seguinte:
 
 #### Descrição: A entidade Mapa 
 
-#### Observação: Essa tabela possui chave estrangeira da entidade ``.
+#### Observação:
 
 | Nome Variável          |     Tipo     |            Descrição                                  | Valores permitidos | Permite valores nulos? | É chave? | Outras Restrições |
 | :--------------------: | :----------: | :---------------------------------------------------: | :----------------: | :--------------------: | :------: | ----------------- |
