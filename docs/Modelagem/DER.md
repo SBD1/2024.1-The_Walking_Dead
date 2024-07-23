@@ -14,7 +14,7 @@ Uma vantagem significativa do Lucidchart foi a capacidade de colaborar em tempo 
 
 ## Diagrama
 
-![Diagrama Entidade-Relacionamento](docs/Modelagem/TheWalkingDead-DER.png)
+![Descrição da Imagem](/Modelagem/TheWalkingDead-DER(1).png)
 
 
 ## Diagrama Entidade-Relacionamento
