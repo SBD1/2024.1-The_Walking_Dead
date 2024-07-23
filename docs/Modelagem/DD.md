@@ -79,44 +79,50 @@ A abordagem empregada na construção do dicionário de dados foi a seguinte:
 
 | Nome Variável          |     Tipo     |            Descrição                                  | Valores permitidos | Permite valores nulos? | É chave? | Outras Restrições |
 | :--------------------: | :----------: | :---------------------------------------------------: | :----------------: | :--------------------: | :------: | ----------------- |
-|       nome        |  varchar[60] |      Nome da missão                              |      a-z, A-Z      |          não           |          |                   |
-|        ID         |      int     | código de identificação da missão                     |         1-9        |          não           |    PK    |                   |
-|     Descrição     | varchar [500]| descrição da missão |     a-z, A-Z          |          não           |          |                   |
-|      Tipo         |      enum     |Indica quantos ataques o equipamento resistirá/realizará|Combate, busca, dialogo|          não           |          |                   |
-| Recompensa        |      varchar[60]     |Indica o poder de ataque ou de defesa do equipamento   |      1 - 500       |          não           |          |                   |
+|       nome             |  varchar[60] |      Nome da missão                                   |      a-z, A-Z      |          não           |          |                   |
+|        ID              |      int     | código de identificação da missão                     |         1-9        |          não           |    PK    |                   |
+|     Descrição          | varchar [500]| descrição da missão                                   |     a-z, A-Z       |          não           |          |                   |
+|      Tipo              |      enum    |Indica o tipo de objetivo da missão                   |Combate, busca, dialogo|        não           |          |                   |
+| Recompensa             | varchar[60]  |O que o jogador irá receber a oconcluir a missão       |      1 - 500       |          não           |          |                   |
 ## Entidade: Item
 
 #### Descrição: A entidade Item descreve os itens que o usuário poderá encontrar no mapa ou em seu inventário
 
-#### Observação: Essa tabela possui chave estrangeira da entidade `Localização`.
+#### Observação: Essa tabela possui chave estrangeira da entidade ``.
 
 | Nome Variável          |     Tipo     |            Descrição                                  | Valores permitidos | Permite valores nulos? | É chave? | Outras Restrições |
 | :--------------------: | :----------: | :---------------------------------------------------: | :----------------: | :--------------------: | :------: | ----------------- |
 |       nome             |  varchar[60] |      Nome do item                                     |      a-z, A-Z      |          não           |          |                   |
 |        ID              |      int     | código de identificação do item                       |         1-9        |          não           |    PK    |                   |
-|     Descrição          | varchar [200]| identifica se o aluno é de graduação ou pós-graduação |      1-100         |          não           |          |                   |
-|      Tipo              |      int     |Indica quantos ataques o equipamento resistirá/realizará|      a-z, A-Z     |          não           |          |                   |
-| Pode de ataque / defesa|      int     |Indica o poder de ataque ou de defesa do equipamento   |      1 - 500       |          não           |          |                   |
-|     Estado             |      int     | Indica se o equipamento está danificado, com/sem munição, estragado, etc.  | 1 - 9 | não            |          |                   |
-|     Valor              |      int     | Indica o valor de venda ou de compra do equipamento   |      a-z, A-Z      |          sim           |          |                   |
-|     Localização        | varchar [60] | Indica onde o equipamento está localizado             |      a-z, A-Z      |          sim           |    FK   |                   |
+|     Descrição          | varchar [200]| texto de descrição do item                           |      a-z, A-Z         |          não           |          |                   |
+|      Tipo              |      enum    |Indica o tipo do item    |Arma, ferramenta, vestimenta, alimento, medicamento |          não           |          |                   |
+|Dano                    |      int     |Indica o poder de ataque ou da arma   |      1 - 500       |          sim           |          |                   |
+|Alcance                 |      int     |Indica as casas de alcance em que a arma é efetiva |1 - 100 | sim            |          |                   |
+| Valor                  |      int     | Indica o valor de venda ou de compra do item   |      1 - 5000     |          sim           |          |                   |
+|Poder de regeneração    |      int     | Indica o quanto o medicamento é capaz de curar |     1 - 1000     |          sim           |       |                   |
+|Poder de força          |      int     | Indica o benefício que o aliento irá prover no poder de ataque/defesa|      1 - 500      |          sim           |       |                   |
+|Proteção                |     int      | Indica o quanto a vestimenta irá incrementar na defesa do personagem|      1 - 500     |          sim           |       |                   |
+|Resistência             |      int     | Indica resistência da vestimenta|      1 - 500      |          sim           |       |                   |
+|     Localização        | varchar [60] | Indica onde o item está localizado                     |      a-z, A-Z      |          sim           |    FK    |                   |
 
 ## Entidade: Mapa
 
-#### Descrição: A entidade Equipamento descreve os itens equipáveis que o usuário poderá encontrar no mapa ou em seu inventário
+#### Descrição: A entidade Mapa 
 
-#### Observação: Essa tabela possui chave estrangeira da entidade `Localização`.
+#### Observação: Essa tabela possui chave estrangeira da entidade ``.
 
 | Nome Variável          |     Tipo     |            Descrição                                  | Valores permitidos | Permite valores nulos? | É chave? | Outras Restrições |
 | :--------------------: | :----------: | :---------------------------------------------------: | :----------------: | :--------------------: | :------: | ----------------- |
-|       nome             |  varchar[60] |      Nome do equipamento                              |      a-z, A-Z      |          não           |          |                   |
-|        ID              |      int     | código de identificação do item                       |         1-9        |          não           |    PK    |                   |
-|     Descrição          | varchar [200]| identifica se o aluno é de graduação ou pós-graduação |      1-100         |          não           |          |                   |
-|      Durabilidade      |      int     |Indica quantos ataques o equipamento resistirá/realizará|      a-z, A-Z     |          não           |          |                   |
-| Pode de ataque / defesa|      int     |Indica o poder de ataque ou de defesa do equipamento   |      1 - 500       |          não           |          |                   |
-|     Estado             |      int     | Indica se o equipamento está danificado, com/sem munição, estragado, etc.  | 1 - 9 | não            |          |                   |
-|     Valor              |      int     | Indica o valor de venda ou de compra do equipamento   |      a-z, A-Z      |          sim           |          |                   |
-|     Localização        | varchar [60] | Indica onde o equipamento está localizado             |      a-z, A-Z      |          sim           |    FK   |                   |
+|       nome             |  varchar[60] |      Nome do mapa                                     |      a-z, A-Z      |          não           |          |                   |
+|        ID              |      int     | código de identificação do mapa                       |         1-9        |          não           |    PK    |                   |
+|     Território         | varchar [60] | indica a qual território o mapa está associado        |      1-100         |          não           |          |                   |
+|      Coordenada X     |      int      |Indica as coordenadas do eixo horizontal               |      a-z, A-Z      |          não           |          |                   |
+|  Coordenada Y         |      int      |Indica as coordenadas do eixo vertical                 |      1 - 500       |          não           |          |                   |
+|     tipo              |      enum     |indica o tipo do mapa                                  |Cidade, cadeia, floresta| não                |          |                   |
+|     Descrição         |varchar[200]   |indica a descrição do mapa (contextualização)          |      a-z, A-Z      |          sim           |          |                   |
+|     Recursos          |      int      |indica a quantidade de recursos disponível no mapa     |      a-z, A-Z      |          sim           |          |                   |
+|       N_Cela          |      int      |  (?)                                                  |      a-z, A-Z      |          não           |          |                   |
+|       Animais         |      (?)      |  (?)                                                  |      a-z, A-Z      |          não           |          |                   |
 
 ## 📑 Histórico de Versões
 
