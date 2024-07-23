@@ -121,8 +121,6 @@ A abordagem empregada na construção do dicionário de dados foi a seguinte:
 |     tipo              |      enum     |indica o tipo do mapa                                  |Cidade, cadeia, floresta| não                |          |                   |
 |     Descrição         |varchar[200]   |indica a descrição do mapa (contextualização)          |      a-z, A-Z      |          sim           |          |                   |
 |     Recursos          |      int      |indica a quantidade de recursos disponível no mapa     |      a-z, A-Z      |          sim           |          |                   |
-|       N_Cela          |      int      |  (?)                                                  |      a-z, A-Z      |          não           |          |                   |
-|       Animais         |      (?)      |  (?)                                                  |      a-z, A-Z      |          não           |          |                   |
 
 ## 📑 Histórico de Versões
 
