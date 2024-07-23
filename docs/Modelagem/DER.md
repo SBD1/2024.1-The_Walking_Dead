@@ -12,10 +12,16 @@ Para criar o Diagrama de Entidade-Relacionamento (DER), utilizamos o Lucidchart,
 
 Uma vantagem significativa do Lucidchart foi a capacidade de colaborar em tempo real com outros membros da equipe. Isso nos permitiu trabalhar juntos na criação e revisão do diagrama, facilitando a comunicação e garantindo a precisão do resultado final.
 
+## Diagrama
+
+![Diagrama Entidade-Relacionamento](docs/Modelagem/TheWalkingDead-DER.png)
+
+
 ## Diagrama Entidade-Relacionamento
 
 ## 📑 Histórico de Versões
 
 | **Versão**   |   **Data**   | **Descrição** | **Autor** |
 |--------|---------|-----------|--------|
-|`1.0`| 28/04/2024 | Criação da página do diagrama entidade-relacionamento| [Mayara Alves](https://github.com/Mayara-tech)| 
+|`1.0`| 28/04/2024 | Criação da página do diagrama entidade-relacionamento| [Mayara Alves](https://github.com/Mayara-tech)|
+|`1.1`| 22/07/2024 | Adicionando diagrama confeccionado por todos os membros do grupo| [Joel](https://github.com/JoelSRngl)|  
