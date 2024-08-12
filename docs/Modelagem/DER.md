@@ -15,7 +15,7 @@ Uma vantagem significativa do Lucidchart foi a capacidade de colaborar em tempo 
 ## Diagrama
 
 <div align="center">
-<div align="center"><img src= "https://raw.githubusercontent.com/SBD1/2024.1-The_Walking_Dead/main/docs/Modelagem/TheWalkingDead- SBD1 (1).pngraw=true"/></div>
+<div align="center"><img src= "https://raw.githubusercontent.com/SBD1/2024.1-The_Walking_Dead/main/docs/Modelagem/TheWalkingDead- SBD1 (1).png?raw=true"/></div>
 </div>
 
 
