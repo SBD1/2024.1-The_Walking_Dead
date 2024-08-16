@@ -15,7 +15,7 @@ Uma vantagem significativa do Lucidchart foi a capacidade de colaborar em tempo 
 ## Diagrama
 
 <div align="center">
-<div align="center"><img src= "https://raw.githubusercontent.com/SBD1/2024.1-The_Walking_Dead/main/docs/Modelagem/TheWalkingDead- SBD1 (1).png?raw=true"/></div>
+<div align="center"><img src= "https://raw.githubusercontent.com/SBD1/2024.1-The_Walking_Dead/main/docs/Modulo_1/TheWalkingDead-SBD1_antigo.png?raw=true"/></div>
 </div>
 
 
@@ -26,5 +26,4 @@ Uma vantagem significativa do Lucidchart foi a capacidade de colaborar em tempo 
 | **Versão**   |   **Data**   | **Descrição** | **Autor** |
 |--------|---------|-----------|--------|
 |`1.0`| 28/04/2024 | Criação da página do diagrama entidade-relacionamento| [Mayara Alves](https://github.com/Mayara-tech)|
-|`1.1`| 22/07/2024 | Adicionando diagrama confeccionado por todos os membros do grupo| [Joel](https://github.com/JoelSRngl)|
-|`1.2`| 22/07/2024 | Corrigindo diagrama| [Joel](https://github.com/JoelSRngl)|    
+|`1.1`| 22/07/2024 | Adicionando diagrama confeccionado por todos os membros do grupo| [Joel](https://github.com/JoelSRngl)| 
