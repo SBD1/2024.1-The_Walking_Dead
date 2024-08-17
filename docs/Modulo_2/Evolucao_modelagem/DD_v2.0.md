@@ -17,6 +17,20 @@ A abordagem empregada na construção do dicionário de dados foi a seguinte:
 
 # Dicionário de dados
 
+## Entidade: Inventário
+
+#### Descrição: A entidade Item descreve os itens que estarão presentes no jogo. Um item pode ser do tipo equipamento ou consumível
+
+#### Observação: Essa tabela possui chave estrangeira da entidade `Personagem` e `Instância_Item`.
+
+| Nome Variável          |     Tipo     |            Descrição                                  | Valores permitidos | Permite valores nulos? | É chave? | Outras Restrições |
+| :--------------------: | :----------: | :---------------------------------------------------: | :----------------: | :--------------------: | :------: | ----------------- |
+|        ID              |      int     | código de identificação do inventário                 |         1-99       |          não           |    PK    |                   |
+|        ID              |      int     | código de identificação da instância do item          |         1-99       |          não           |    FK    |                   |
+|        ID              |      int     | código de identificação do Personagem associado      |         1-99        |          não           |    FK    |                   |
+|      Tipo              |      enum    |Indica o tipo do item    |Arma, ferramenta, vestimenta, alimento, medicamento |          não           |          |                   |
+| Tamanho                |      int     | Indica limite de itens do inventário           |      1 - 50     |          não           |          |                   |
+
 ## Entidade: Item
 
 #### Descrição: A entidade Item descreve os itens que estarão presentes no jogo. Um item pode ser do tipo equipamento ou consumível
