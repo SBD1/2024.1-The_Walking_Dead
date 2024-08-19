@@ -6,6 +6,9 @@ CREATE TYPE tipo_item AS ENUM ('equipamento', 'consumivel');
 -- Criação do tipo ENUM para o campo 'Tipo' da tabela Item_Equipamento
 CREATE TYPE tipo_equipamento AS ENUM ('Arma', 'ferramenta', 'vestimenta', 'alimento', 'medicamento');
 
+-- Criação do tipo ENUM para o campo 'Tipo' da tabela Missao
+CREATE TYPE tipo_missao AS ENUM ('combate', 'busca', 'dialogo');
+
 -- Tabela: Item
 CREATE TABLE Item (
     ID INT PRIMARY KEY,
@@ -96,4 +99,14 @@ CREATE TABLE NPC (
     ID INT PRIMARY KEY,
     Funcao VARCHAR(60) NOT NULL,
     Dialogo VARCHAR(5000) NOT NULL
+);
+
+-- Tabela: Missao
+CREATE TABLE Missao (
+    ID INT PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL,
+    descricao VARCHAR(200) NOT NULL,
+    tipo tipo_missao NOT NULL,
+    premio INT,
+    FOREIGN KEY (premio) REFERENCES Item(ID)
 );
