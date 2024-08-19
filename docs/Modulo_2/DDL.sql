@@ -109,4 +109,4 @@ CREATE TABLE Missao (
     tipo tipo_missao NOT NULL,
     premio INT,
     FOREIGN KEY (premio) REFERENCES Item(ID)
-);
+i);
