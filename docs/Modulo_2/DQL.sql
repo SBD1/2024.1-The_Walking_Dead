@@ -30,3 +30,36 @@ SELECT * FROM habilidades
 WHERE descricao ILIKE '%combate%';
 
 SELECT nome, descricao FROM habilidades;
+
+
+
+-- Seleciona todas as colunas da tabela Região
+SELECT * FROM Região;
+
+-- Seleciona todas as colunas da tabela Local
+SELECT * FROM Local;
+
+-- Seleciona os nomes e as dimensões dos locais na região de 'Prisão'
+SELECT nome, Dimensões FROM Local WHERE tipo = 'Cadeia';
+
+-- Seleciona todas as colunas da tabela Item
+SELECT * FROM Item;
+
+-- Seleciona o nome e o valor de todos os itens do tipo 'equipamento'
+SELECT nome, Valor FROM Item WHERE Tipo = 'equipamento';
+
+-- Seleciona todos os itens com valor maior que 1000
+SELECT nome, Descrição, Valor FROM Item WHERE Valor > 1000;
+
+-- Seleciona os estados e tipos de todos os equipamentos do tipo 'Arma'
+SELECT Estado, Tipo FROM Item_Equipamento WHERE Tipo = 'Arma';
+
+-- Seleciona todas as colunas da tabela Item-Equipamento-Arma
+SELECT * FROM Item_Equipamento_Arma;
+
+-- Seleciona os poderes de defesa de todas as armaduras
+SELECT Item_ID, Poder_de_defesa FROM Item_Equipamento_Armadura;
+-- Seleciona todos os consumíveis com poder de regeneração maior que 100
+SELECT Item_ID, Poder_de_Regeneração FROM Item_Consumível WHERE Poder_de_Regeneração > 100;
+-- Seleciona os IDs dos itens que estão na 'Prisão'
+SELECT ID, Item_ID FROM Instancia_Item WHERE Localização = 'Prisão';

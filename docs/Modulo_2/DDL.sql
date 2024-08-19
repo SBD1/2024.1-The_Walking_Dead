@@ -50,11 +50,17 @@ CREATE TABLE Personagem (
 -- Tabela: Inventário
 CREATE TABLE Inventario (
     ID INT PRIMARY KEY,
-    Instancia_Item_ID INT NOT NULL,
     Personagem_ID INT NOT NULL,
     Tamanho INT CHECK(Tamanho >= 1 AND Tamanho <= 50) NOT NULL,
-    FOREIGN KEY (Instancia_Item_ID) REFERENCES Instancia_Item(ID),
     FOREIGN KEY (Personagem_ID) REFERENCES Personagem(ID)
+);
+
+CREATE TABLE inventario_item (
+    ID_inventario INT,
+    ID_item INT,
+    PRIMARY KEY (ID_inventario, ID_item),
+    FOREIGN KEY (ID_inventario) REFERENCES inventario(ID),
+    FOREIGN KEY (ID_item) REFERENCES item(ID_item)
 );
 
 -- Tabela: Item-Equipamento

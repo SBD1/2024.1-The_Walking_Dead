@@ -19,7 +19,7 @@ A abordagem empregada na construção do dicionário de dados foi a seguinte:
 
 ## Entidade: Inventário
 
-#### Descrição: A entidade Item descreve os itens que estarão presentes no jogo. Um item pode ser do tipo equipamento ou consumível
+#### Descrição: A entidade descre o inventário dos personagens.
 
 #### Observação: Essa tabela possui chave estrangeira da entidade `Personagem` e `Instância_Item`.
 
@@ -29,6 +29,17 @@ A abordagem empregada na construção do dicionário de dados foi a seguinte:
 |        ID_item         |      int     | código de identificação da instância do item          |         1-99       |          não           |    FK    |                   |
 |        ID_Personagem   |      int     | código de identificação do Personagem associado      |         1-99        |          não           |    FK    |                   |
 | Tamanho                |      int     | Indica limite de itens do inventário           |      1 - 50     |          não           |          |                   |
+
+## Entidade: inventario_item
+
+#### Descrição: A entidade descreve os itens presentes nos inventários
+
+#### Observação: Essa tabela possui chave estrangeira da entidade `Personagem` e `Instância_Item`.
+
+| Nome Variável          |     Tipo     |            Descrição                                  | Valores permitidos | Permite valores nulos? | É chave? | Outras Restrições |
+| :--------------------: | :----------: | :---------------------------------------------------: | :----------------: | :--------------------: | :------: | ----------------- |
+|        ID_inventarrio  |      int     | código de identificação do inventário                 |         1-99       |          não         |    PK, FK   |                  |
+|        ID_item         |      int     | código de identificação da instância do item          |         1-99       |          não           |    FK    |                   |
 
 ## Entidade: Item
 
@@ -41,7 +52,7 @@ A abordagem empregada na construção do dicionário de dados foi a seguinte:
 |       nome             |  varchar[60] |      Nome do item                                     |      a-z, A-Z      |          não           |          |                   |
 |        ID              |      int     | código de identificação do item                       |         1-99       |          não           |    PK    |                   |
 |     Descrição          | varchar [200]| texto de descrição do item                           |      a-z, A-Z         |          não           |          |                   |
-|      Tipo              |      enum    |Indica o tipo do item    |Arma, ferramenta, vestimenta, alimento, medicamento |          não           |          |                   |
+|      Tipo              |      enum    |Indica o tipo do item    |equipamento ou consumível|          não           |          |                   |
 | Valor                  |      int     | Indica o valor de venda ou de compra do item           |      1 - 5000     |          sim           |          |                   |
 
 ## Entidade: Instância_Item
