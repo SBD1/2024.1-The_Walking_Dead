@@ -7,7 +7,7 @@
 -- --------------------------------------------------------------------------------------
 -- --------------------------------------------------------------------------------------
 -- Data Criacao ...........: 18/08/2024                                                --
--- Autor(es) ..............: Joel Soares, Daniel Rocha                                 --
+-- Autor(es) ..............: Joel Soares, Daniel Rocha, Matheus Oliveira                                 --
 -- Versao ..............: 1.1                                                          --
 -- Banco de Dados .........: PostgreSQL                                                --
 -- Descricao .........: Consulta das tabelas do banco de dados.                        --
