@@ -63,3 +63,7 @@ SELECT Item_ID, Poder_de_defesa FROM Item_Equipamento_Armadura;
 SELECT Item_ID, Poder_de_Regeneração FROM Item_Consumível WHERE Poder_de_Regeneração > 100;
 -- Seleciona os IDs dos itens que estão na 'Prisão'
 SELECT ID, Item_ID FROM Instancia_Item WHERE Localização = 'Prisão';
+
+-- Mostra o ID e nome de todos os itens que são premio de alguma missão 
+SELECT ID, nome FROM Item, Missao
+WHERE Item.ID = Missao.premio
