@@ -149,3 +149,10 @@ VALUES
 (6, 'Rio Congelado', 2000, 'Floresta', 'Um rio que corta a floresta, perigoso por suas águas rápidas e geladas.', 8, 40);
 (7, 'Praça Central de Woodbury', 4000, 'Cidade', 'O centro da cidade, cercado por lojas e casas abandonadas.', 12, 50),
 (8, 'Muralha de Woodbury', 2000, 'Cidade', 'A fortificação que protege a cidade de invasores e zumbis.', 7, 60);
+
+INSERT INTO Missao (ID, nome, descricao, tipo, premio)
+VALUES
+(1, 'Matar Patrick', 'O novo sobrevivente Patrick virou um zumbi, mate-o', 'combate', 1),
+(2, 'Explorar Faculdade Veterinária', 'Busque remédio para os porcos na faculdade veterinária', 'busca', 5),
+(3, 'Converse com Carol', 'Dê a mensagem de Rick para a Carol', 'dialogo', 4),
+(4, 'Negocie com o Governador', 'Tente negociar um tratado de paz com o Governador', 'dialogo', NULL);
