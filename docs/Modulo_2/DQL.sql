@@ -66,4 +66,4 @@ SELECT ID, Item_ID FROM Instancia_Item WHERE Localização = 'Prisão';
 
 -- Mostra o ID e nome de todos os itens que são premio de alguma missão 
 SELECT ID, nome FROM Item, Missao
-WHERE Item.ID = Missao.premio
+WHERE Item.ID = Missao.premio;
