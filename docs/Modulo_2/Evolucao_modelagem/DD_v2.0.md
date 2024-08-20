@@ -26,7 +26,6 @@ A abordagem empregada na construção do dicionário de dados foi a seguinte:
 | Nome Variável          |     Tipo     |            Descrição                                  | Valores permitidos | Permite valores nulos? | É chave? | Outras Restrições |
 | :--------------------: | :----------: | :---------------------------------------------------: | :----------------: | :--------------------: | :------: | ----------------- |
 |        ID              |      int     | código de identificação do inventário                 |         1-99       |          não           |    PK    |                   |
-|        ID_item         |      int     | código de identificação da instância do item          |         1-99       |          não           |    FK    |                   |
 |        ID_Personagem   |      int     | código de identificação do Personagem associado      |         1-99        |          não           |    FK    |                   |
 | Tamanho                |      int     | Indica limite de itens do inventário           |      1 - 50     |          não           |          |                   |
 
