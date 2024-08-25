@@ -33,18 +33,14 @@ CREATE TABLE Habilidades (
     Descricao VARCHAR(5000) NOT NULL
 );
 
--- Tabela: Personagem (Referência à tabela Habilidades)
+-- Criando a tabela Personagem
 CREATE TABLE Personagem (
     ID INT PRIMARY KEY,
     Nome VARCHAR(60) NOT NULL,
     Genero VARCHAR(50) NOT NULL,
-    Forca INT CHECK(Forca >= 0) NOT NULL,
-    Velocidade INT CHECK(Velocidade >= 0) NOT NULL,
     HP INT CHECK(HP >= 0) NOT NULL,
-    Habilidades_ID INT,
     Status VARCHAR(60) NOT NULL,
-    Localizacao VARCHAR(60) NOT NULL,
-    FOREIGN KEY (Habilidades_ID) REFERENCES Habilidades(ID)
+    Localizacao VARCHAR(60) NOT NULL
 );
 
 -- Tabela: Inventário
@@ -100,11 +96,31 @@ CREATE TABLE Zumbi (
     HP INT CHECK(HP >= 0) NOT NULL
 );
 
--- Tabela: NPC
+-- Criando a tabela Instancia_Zumbi
+CREATE TABLE Instancia_Zumbi (
+    ID_Instancia SERIAL PRIMARY KEY,  -- ID único para cada instância de zumbi
+    ID_Zumbi INT NOT NULL,            -- Referência ao zumbi na tabela Zumbi
+    Status VARCHAR(60) NOT NULL,
+    Localizacao VARCHAR(60) NOT NULL,
+    FOREIGN KEY (ID_Zumbi) REFERENCES Zumbi(ID)
+);
+
+-- Criando a tabela Jogador com referência à tabela Personagem
+CREATE TABLE Jogador (
+    ID INT PRIMARY KEY,
+    Forca INT CHECK(Forca >= 0) NOT NULL,
+    Velocidade INT CHECK(Velocidade >= 0) NOT NULL,
+    Habilidades_ID INT,
+    FOREIGN KEY (ID) REFERENCES Personagem(ID),
+    FOREIGN KEY (Habilidades_ID) REFERENCES Habilidades(ID)
+);
+
+-- Criando a tabela NPC com referência à tabela Personagem
 CREATE TABLE NPC (
     ID INT PRIMARY KEY,
     Funcao VARCHAR(60) NOT NULL,
-    Dialogo VARCHAR(5000) NOT NULL
+    Dialogo VARCHAR(5000) NOT NULL,
+    FOREIGN KEY (ID) REFERENCES Personagem(ID)
 );
 
 -- Tabela: Missao

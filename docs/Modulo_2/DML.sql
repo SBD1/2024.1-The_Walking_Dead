@@ -28,12 +28,34 @@
 -- Descricao .........: Inserção das Tuplas nas tabelas                                --
 -- --------------------------------------------------------------------------------------
 
-INSERT INTO personagem (id, nome, genero, forca, velocidade, hp, habilidades_id, status, localizacao)
+-- Inserção de dados na tabela Personagem
+INSERT INTO Personagem (ID, Nome, Genero, HP, Status, Localizacao)
 VALUES
-(1, 'Rick', 'Masculino', 90, 200, 2000, 1, 'Vivo', 'Fazenda'),
-(2, 'Michonne', 'Feminino', 70, 400, 1200, 2, 'Vivo', 'Fazenda'),
-(3, 'Glenn', 'Masculino', 70, 500, 1800, 3, 'Vivo', 'Floresta'),
-(4, 'Maggie', 'Feminino', 50, 300, 1000, 4, 'Vivo', 'Floresta');
+(1, 'Rick Grimes', 'Masculino', 2000, 'Vivo', 'Fazenda'),
+(2, 'Daryl Dixon', 'Masculino', 1800, 'Vivo', 'Floresta'),
+(3, 'Michonne', 'Feminino', 1600, 'Vivo', 'Fazenda'),
+(4, 'Negan', 'Masculino', 1500, 'Vivo', 'Cidade');
+
+-- Inserção de dados na tabela Jogador (herda de Personagem)
+INSERT INTO Jogador (ID, Forca, Velocidade, Habilidades_ID)
+VALUES
+(1, 90, 200, 1),  -- Rick Grimes
+(2, 80, 250, 2),  -- Daryl Dixon
+(3, 85, 220, 3);  -- Michonne
+
+-- Inserção de dados na tabela NPC (herda de Personagem)
+INSERT INTO NPC (ID, Funcao, Dialogo)
+VALUES
+(4, 'Líder dos Salvadores', 'Aqui as coisas são feitas do meu jeito.');  -- Negan
+
+-- Inserção de dados na tabela Instancia_Zumbi
+INSERT INTO Instancia_Zumbi (ID_Zumbi, Status, Localizacao)
+VALUES
+(1, 'Ativo', 'Floresta'),
+(2, 'Ativo', 'Fazenda'),
+(3, 'Inativo', 'Cidade'),
+(4, 'Ativo', 'Posto de Controle');
+
 
 INSERT INTO zumbi (id, forca, velocidade, hp)
 VALUES
@@ -41,13 +63,6 @@ VALUES
 (2, 50, 20, 150),
 (3, 60, 25, 120),
 (4, 55, 35, 130);
-
-INSERT INTO npc (id, funcao, dialogo)
-VALUES
-(1, 'Vendedor', 'Bem-vindo ao mercado!'),
-(2, 'Guarda', 'Apenas os autorizados podem passar.'),
-(3, 'Curandeiro', 'Precisa de um tratamento?'),
-(4, 'Informante', 'Tenho informações valiosas para você.');
 
 INSERT INTO habilidades (id, nome, descricao)
 VALUES
