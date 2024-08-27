@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  db:
+    build: .
+    container_name: postgres_twd_db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: twd_db
+      POSTGRES_USER: adm
+      POSTGRES_PASSWORD: 12345
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    networks:
+      - twd_network
+
+networks:
+  twd_network:
+    driver: bridge
