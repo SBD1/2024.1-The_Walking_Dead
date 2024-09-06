@@ -147,12 +147,12 @@ VALUES
 (11, 11, 'Centro Comunitário'),
 (12, 12, 'Refúgio');
 
-INSERT INTO Região (ID, nome, tipo, Descrição) 
+INSERT INTO Regiao (ID, nome, Descrição) 
 VALUES 
-(1, 'Atlanta', 'Cidade', 'A cidade devastada de Atlanta, cheia de arranha-céus abandonados e ruas perigosas.'),
-(2, 'Prisão', 'Cadeia', 'Uma prisão de segurança máxima, agora transformada em um refúgio contra os zumbis.'),
-(3, 'Floresta Nacional', 'Floresta', 'Uma vasta floresta densa que oferece tanto abrigo quanto perigo.'),
-(4, 'Woodbury', 'Cidade', 'Uma cidade aparentemente pacífica, mas com segredos sombrios escondidos atrás de suas muralhas.');
+(1, 'Atlanta', 'A cidade devastada de Atlanta, cheia de arranha-céus abandonados e ruas perigosas.'),
+(2, 'Prisão', 'Uma prisão de segurança máxima, agora transformada em um refúgio contra os zumbis.'),
+(3, 'Floresta Nacional', 'Uma vasta floresta densa que oferece tanto abrigo quanto perigo.'),
+(4, 'Woodbury', 'Uma cidade aparentemente pacífica, mas com segredos sombrios escondidos atrás de suas muralhas.');
 
 INSERT INTO Local (ID, nome, Dimensões, tipo, Descrição, Recursos, Dificuldade) 
 VALUES 

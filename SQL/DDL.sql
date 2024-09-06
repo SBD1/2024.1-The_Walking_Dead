@@ -131,4 +131,20 @@ CREATE TABLE Missao (
     tipo tipo_missao NOT NULL,
     premio INT,
     FOREIGN KEY (premio) REFERENCES Item(ID)
-i);
+);
+
+CREATE TABLE Local (
+    ID INT PRIMARY KEY,
+    nome VARCHAR(60) NOT NULL,
+    dimensoes INT NOT NULL CHECK (dimensoes BETWEEN 1 AND 500),
+    tipo ENUM('Cidade', 'Cadeia', 'Floresta') NOT NULL,
+    descricao VARCHAR(200),
+    recursos INT CHECK (recursos BETWEEN 1 AND 99),
+    dificuldade INT CHECK (dificuldade BETWEEN 1 AND 99)
+);
+
+CREATE TABLE Regiao (
+    ID INT PRIMARY KEY,
+    nome VARCHAR(60) NOT NULL,
+    descricao VARCHAR(200)
+);
