@@ -18,6 +18,31 @@ O jogador assume o papel de um sobrevivente recentemente desperto em meio ao cao
 
 ## :interrobang: Como jogar?
 
+### Inicializando o docker
+
+Na raiz do projeto, em seu terminal, use o comando:
+
+```bash
+sudo docker-compose up
+```
+
+### Inicializando o jogo
+
+Na raiz também use o comando:
+
+```
+pip install -r requirements.txt
+python game/main.py
+```
+
+ou
+
+```
+pip install -r requirements.txt
+python3 game/main.py
+```
+
+
 ## :handshake: Colaboradores
 
 | <img src="https://avatars.githubusercontent.com/u/98978800?v=4" width="100px" style="border-radius: 50%;"> | <img src="https://avatars.githubusercontent.com/u/71887425?v=4" width="100px" style="border-radius: 50%;"> | <img src="https://avatars.githubusercontent.com/u/67807684?v=4" width="100px" style="border-radius: 50%;"> | <img src="https://avatars.githubusercontent.com/u/108437995?v=4" width="100px" style="border-radius: 50%;"> |

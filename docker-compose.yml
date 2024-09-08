@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: the_walking_dead 
+    volumes:
+      - ./SQL/DDL.sql:/docker-entrypoint-initdb.d/0DDL.sql
+      - ./SQL/create_user.sql:/docker-entrypoint-initdb.d/1create_user.sql
+      - ./SQL/DML.sql:/docker-entrypoint-initdb.d/2DML.sql
+    expose:
+      - "5432"
+    restart: always
+    networks: 
+      - postgres-connection
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: postgres@email.com
+      PGADMIN_DEFAULT_PASSWORD: postgres
+      PGADMIN_LISTEN_ADDRESS: 0.0.0.0
+    depends_on:
+      - db
+    ports:
+      - 8080:80
+
+  networks:
+    postgres-connection:
+      driver: bridge
