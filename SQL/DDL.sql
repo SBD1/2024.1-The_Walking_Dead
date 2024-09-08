@@ -9,6 +9,9 @@ CREATE TYPE tipo_equipamento AS ENUM ('Arma', 'ferramenta', 'vestimenta', 'alime
 -- Criação do tipo ENUM para o campo 'Tipo' da tabela Missao
 CREATE TYPE tipo_missao AS ENUM ('combate', 'busca', 'dialogo');
 
+-- Criação do tipo ENUM para o campo 'Tipo' da tabela Local
+CREATE TYPE tipo_local AS ENUM('Cidade', 'Cadeia', 'Floresta');
+
 -- Tabela: Item
 CREATE TABLE Item (
     ID INT PRIMARY KEY,
@@ -136,13 +139,12 @@ CREATE TABLE Missao (
 CREATE TABLE Local (
     ID INT PRIMARY KEY,
     nome VARCHAR(60) NOT NULL,
-    dimensoes INT NOT NULL CHECK (dimensoes BETWEEN 1 AND 500),
-    tipo ENUM('Cidade', 'Cadeia', 'Floresta') NOT NULL,
+    dimensoes INT NOT NULL CHECK (dimensoes BETWEEN 1 AND 100000),
+    tipo tipo_local NOT NULL,
     descricao VARCHAR(200),
     recursos INT CHECK (recursos BETWEEN 1 AND 99),
     dificuldade INT CHECK (dificuldade BETWEEN 1 AND 99)
 );
-
 CREATE TABLE Regiao (
     ID INT PRIMARY KEY,
     nome VARCHAR(60) NOT NULL,

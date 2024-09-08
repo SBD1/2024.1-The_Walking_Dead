@@ -71,12 +71,13 @@ VALUES
 (3, 'Furtividade', 'Habilidade para passar pelos inimigos sem ser percebido'),
 (4, 'Sniper', 'Habilidade para dar HS com sniper');
 
-INSERT INTO inventario (ID_personagem, Tamanho)
+INSERT INTO Inventario (ID, instancia_item_id, Personagem_ID, Tamanho)
 VALUES
-(1, 10),
-(2, 5),
-(3, 5),
-(4, 5);
+(1, 1, 1, 10),
+(2, 2, 2, 5),
+(3, 3, 3, 5),
+(4, 4, 4, 5);
+
 
 INSERT INTO inventario_item (ID_inventario, ID_item)
 VALUES
@@ -100,39 +101,39 @@ VALUES
 (11, 'Kit de Primeiros Socorros', 'Contém suprimentos médicos essenciais', 'consumível', 500),
 (12, 'Água Purificada', 'Garrafa de água segura para consumo', 'consumível', 100);
 
-INSERT INTO Item_Equipamento (Item_ID, Estado, Tipo) 
+INSERT INTO Item_Equipamento (ID, Estado, Tipo) 
 VALUES 
 (1, 'Nova', 'Arma'),
 (2, 'Com Municao', 'Arma'),
-(3, 'Usada', 'Armadura'),
+(3, 'Usada', 'vestimenta'),
 (6, 'Carregada', 'Arma'),
-(7, 'Nova', 'Armadura'),
-(8, 'Pronta para uso', 'Armadura'),
-(9, 'Afiação Média', 'Arma'),
-(10, 'Sem Danos', 'Armadura');
+(7, 'Nova', 'vestimenta'),
+(8, 'Pronta para uso', 'vestimenta'),
+(9, 'Afiação Média', 'medicamento'),
+(10, 'Sem Danos', 'vestimenta');
 
-INSERT INTO Item_Equipamento_Arma (Item_ID, Poder_de_ataque) 
+INSERT INTO Item_Equipamento_Arma (ID, Poder_de_ataque) 
 VALUES 
 (1, 350),
 (2, 500),
 (6, 700),
 (9, 300);
 
-INSERT INTO Item_Equipamento_Armadura (Item_ID, Poder_de_defesa)
+INSERT INTO Item_Equipamento_Armadura (ID, Poder_de_defesa)
 VALUES 
 (3, 250),
 (7, 300),
 (8, 450),
 (10, 500);
 
-INSERT INTO Item_Consumível (Item_ID, Poder_de_Regeneração) 
+INSERT INTO Item_Consumivel (Item_ID, Poder_de_Regeneracao) 
 VALUES 
 (4, 50),
 (5, 150),
 (11, 300),
 (12, 100);
 
-INSERT INTO Instancia_Item (ID, Item_ID, Localização)
+INSERT INTO Instancia_Item (ID, Item_ID, Localizacao)
 VALUES 
 (1, 1, 'Posto de Gasolina'),
 (2, 2, 'Casa Abandonada'),
@@ -147,21 +148,21 @@ VALUES
 (11, 11, 'Centro Comunitário'),
 (12, 12, 'Refúgio');
 
-INSERT INTO Regiao (ID, nome, Descrição) 
+INSERT INTO Regiao (ID, nome, Descricao) 
 VALUES 
 (1, 'Atlanta', 'A cidade devastada de Atlanta, cheia de arranha-céus abandonados e ruas perigosas.'),
 (2, 'Prisão', 'Uma prisão de segurança máxima, agora transformada em um refúgio contra os zumbis.'),
 (3, 'Floresta Nacional', 'Uma vasta floresta densa que oferece tanto abrigo quanto perigo.'),
 (4, 'Woodbury', 'Uma cidade aparentemente pacífica, mas com segredos sombrios escondidos atrás de suas muralhas.');
 
-INSERT INTO Local (ID, nome, Dimensões, tipo, Descrição, Recursos, Dificuldade) 
+INSERT INTO Local (ID, nome, Dimensoes, tipo, Descricao, Recursos, Dificuldade) 
 VALUES 
 (1, 'Centro de Atlanta', 10000, 'Cidade', 'O coração da cidade, com edifícios altos e ruas desertas, repletas de perigos.', 10, 80),
-(2, 'Subúrbios de Atlanta', 8000, 'Cidade', 'Bairros residenciais abandonados, onde o silêncio esconde ameaças.', 15, 60);
+(2, 'Subúrbios de Atlanta', 8000, 'Cidade', 'Bairros residenciais abandonados, onde o silêncio esconde ameaças.', 15, 60),
 (3, 'Bloco C', 3000, 'Cadeia', 'O bloco principal da prisão, que foi convertido em uma zona segura.', 20, 70),
-(4, 'Pátio da Prisão', 5000, 'Cadeia', 'Uma área aberta dentro da prisão, cercada por arame farpado.', 10, 50);
+(4, 'Pátio da Prisão', 5000, 'Cadeia', 'Uma área aberta dentro da prisão, cercada por arame farpado.', 10, 50),
 (5, 'Cabana Abandonada', 500, 'Floresta', 'Uma pequena cabana no meio da floresta, isolada e de difícil acesso.', 5, 30),
-(6, 'Rio Congelado', 2000, 'Floresta', 'Um rio que corta a floresta, perigoso por suas águas rápidas e geladas.', 8, 40);
+(6, 'Rio Congelado', 2000, 'Floresta', 'Um rio que corta a floresta, perigoso por suas águas rápidas e geladas.', 8, 40),
 (7, 'Praça Central de Woodbury', 4000, 'Cidade', 'O centro da cidade, cercado por lojas e casas abandonadas.', 12, 50),
 (8, 'Muralha de Woodbury', 2000, 'Cidade', 'A fortificação que protege a cidade de invasores e zumbis.', 7, 60);
 

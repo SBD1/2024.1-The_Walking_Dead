@@ -1,27 +1,28 @@
 CREATE OR REPLACE FUNCTION atualizar_inventario()
 RETURNS TRIGGER AS $$
 BEGIN
-    -- Verifica se o item já está no inventário do jogador
+    -- Verifica se o item já está no inventário do personagem
     IF EXISTS (
         SELECT 1
         FROM Inventario
-        WHERE id_jogador = NEW.id_jogador
-          AND id_item = NEW.id_item
+        WHERE Personagem_ID = NEW.Personagem_ID
+          AND instancia_item_id = NEW.instancia_item_id
     ) THEN
-        -- Se o item já existe, atualize a quantidade
+        -- Atualiza o tamanho do item no inventário
         UPDATE Inventario
-        SET quantidade = quantidade + NEW.quantidade
-        WHERE id_jogador = NEW.id_jogador
-          AND id_item = NEW.id_item;
+        SET Tamanho = Tamanho + NEW.Tamanho
+        WHERE Personagem_ID = NEW.Personagem_ID
+          AND instancia_item_id = NEW.instancia_item_id;
     ELSE
-        -- Se o item não existe, insira uma nova linha
-        INSERT INTO Inventario (id_jogador, id_item, quantidade)
-        VALUES (NEW.id_jogador, NEW.id_item, NEW.quantidade);
+        -- Adiciona o item ao inventário
+        INSERT INTO Inventario (instancia_item_id, Personagem_ID, Tamanho)
+        VALUES (NEW.instancia_item_id, NEW.Personagem_ID, NEW.Tamanho);
     END IF;
 
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
+
 
 -- Trigger
 
@@ -29,4 +30,9 @@ CREATE TRIGGER trigger_atualizar_inventario
 AFTER INSERT ON Inventario
 FOR EACH ROW
 EXECUTE FUNCTION atualizar_inventario();
+
+-- Testando Trigger
+
+INSERT INTO EventoColeta (Personagem_ID, instancia_item_id, tamanho)
+VALUES (123, 2, 10);
 
