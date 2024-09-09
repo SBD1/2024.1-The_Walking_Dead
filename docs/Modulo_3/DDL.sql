@@ -126,11 +126,67 @@ CREATE TABLE NPC (
 -- Tabela: Missao
 CREATE TABLE Missao (
     ID INT PRIMARY KEY,
+    tipo tipo_missao NOT NULL
+);
+
+-- Tabela: Missão_Combate
+CREATE TABLE Missao_Combate (
+    ID INT PRIMARY KEY,
     nome VARCHAR(50) NOT NULL,
     descricao VARCHAR(200) NOT NULL,
-    tipo tipo_missao NOT NULL,
     premio INT,
-    FOREIGN KEY (premio) REFERENCES Item(ID)
+    local INT,
+    missao_seguinte_ID INT,
+    inimigo INT,
+    FOREIGN KEY (local) REFERENCES Local(ID),
+    FOREIGN KEY (premio) REFERENCES Item(ID),
+    FOREIGN KEY (missao_seguinte_ID) REFERENCES Missao(ID),
+    FOREIGN KEY (inimigo) REFERENCES Instancia_Zumbi(ID)
+);
+
+-- Tabela: Missão_Diálogo
+CREATE TABLE Missao_Dialogo (
+    ID INT PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL,
+    descricao VARCHAR(200) NOT NULL,
+    premio INT,
+    local INT,
+    missao_seguinte_ID INT,
+    npc INT,
+    FOREIGN KEY (local) REFERENCES Local(ID),
+    FOREIGN KEY (premio) REFERENCES Item(ID),
+    FOREIGN KEY (missao_seguinte_ID) REFERENCES Missao(ID),
+    FOREIGN KEY (npc) REFERENCES NPC(ID)
+);
+
+-- Tabela: Missão_Busca
+CREATE TABLE Missao_Busca (
+    ID INT PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL,
+    descricao VARCHAR(200) NOT NULL,
+    premio INT,
+    local INT,
+    missao_seguinte_ID INT,
+    item_busca INT,
+    FOREIGN KEY (local) REFERENCES Local(ID),
+    FOREIGN KEY (premio) REFERENCES Item(ID),
+    FOREIGN KEY (missao_seguinte_ID) REFERENCES Missao(ID),
+    FOREIGN KEY (item_busca) REFERENCES Instancia_Item(ID)
+);
+
+-- Tabela: Missão_Status
+CREATE TABLE Missao_Status (
+    missao_id INT PRIMARY KEY,
+    jogador_id INT PRIMARY KEY,
+    missao_status INT NOT NULL,
+    FOREIGN KEY (missao_id) REFERENCES Missao(ID),
+    FOREIGN KEY (jogador_id) REFERENCES Jogador(ID)
+    FOREIGN KEY (missao_status) REFERENCES Missao_Status_Valores(ID)
+);
+
+CREATE TABLE Missao_Status_Valores (
+    ID INT PRIMARY KEY,
+    missao_status VARCHAR(10)
 );
 
 CREATE TABLE Local (
