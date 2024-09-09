@@ -172,3 +172,5 @@ VALUES
 (2, 'Explorar Faculdade Veterinária', 'Busque remédio para os porcos na faculdade veterinária', 'busca', 5),
 (3, 'Converse com Carol', 'Dê a mensagem de Rick para a Carol', 'dialogo', 4),
 (4, 'Negocie com o Governador', 'Tente negociar um tratado de paz com o Governador', 'dialogo', NULL);
+
+commit;

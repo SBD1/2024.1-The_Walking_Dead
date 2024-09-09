@@ -150,3 +150,5 @@ CREATE TABLE Regiao (
     nome VARCHAR(60) NOT NULL,
     descricao VARCHAR(200)
 );
+
+commit;
