@@ -13,6 +13,13 @@ CREATE TYPE tipo_missao AS ENUM ('combate', 'busca', 'dialogo');
 
 CREATE TYPE tipo_local AS ENUM('Cidade', 'Cadeia', 'Floresta');
 
+-- Save
+CREATE TABLE IF NOT EXISTS save (
+    ID INT NOT NULL,
+    PRIMARY KEY(ID)
+);
+
+
 CREATE TABLE Item (
     ID INT PRIMARY KEY,
     nome VARCHAR(30) NOT NULL,

@@ -91,6 +91,28 @@ EXECUTE FUNCTION eliminar_zumbi();
 DELETE FROM instancia_zumbi WHERE id_zumbi = 1;
 DELETE FROM Zumbi WHERE id = 1;
 
+CREATE OR REPLACE FUNCTION respawn_zumbi(jogador_id INT, local_id INT)
+RETURNS VOID AS $$
+DECLARE
+    local_nome VARCHAR;
+BEGIN
+    -- Recupera o nome do local
+    SELECT nome INTO local_nome FROM local WHERE id = local_id;
+
+    -- Respawn de um novo zumbi após o jogador sair do local
+    INSERT INTO instancia_zumbi (id_zumbi, status, localizacao)
+    VALUES (1, 'Ativo', local_nome); -- Respawn de um zumbi do tipo 1 no local
+
+    RAISE NOTICE 'Novo zumbi criado no local % após a saída do jogador %.', local_nome, jogador_id;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trigger_respawn_zumbi
+AFTER DELETE OR UPDATE ON jogador_local 
+FOR EACH ROW
+WHEN (OLD.local_id IS NOT NULL) -- Apenas quando o jogador sair de um local
+EXECUTE FUNCTION respawn_zumbi(OLD.jogador_id, OLD.local_id);
+
 ---------------------------------------------------------------------
 CREATE OR REPLACE PROCEDURE MatarPersonagem(IN p_ID INT)
 LANGUAGE plpgsql
@@ -132,3 +154,4 @@ AFTER UPDATE OF HP
 ON Personagem
 FOR EACH ROW
 EXECUTE FUNCTION VerificarMorte();
+
