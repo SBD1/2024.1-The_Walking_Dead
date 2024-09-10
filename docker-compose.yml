@@ -3,6 +3,7 @@ version: '3.8'
 services:
   db:
     image: postgres
+    container_name: my_postgres_db  # Nome fixo para o container
     ports:
       - "5432:5432"
     environment:
@@ -11,8 +12,8 @@ services:
       POSTGRES_DB: the_walking_dead 
     volumes:
       - ./SQL/DDL.sql:/docker-entrypoint-initdb.d/0DDL.sql
-      - ./SQL/create_user.sql:/docker-entrypoint-initdb.d/1create_user.sql
-      - ./SQL/DML.sql:/docker-entrypoint-initdb.d/2DML.sql
+      - ./SQL/DML.sql:/docker-entrypoint-initdb.d/1DML.sql
+      - ./SQL/create_user.sql:/docker-entrypoint-initdb.d/2create_user.sql
     expose:
       - "5432"
     restart: always

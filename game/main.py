@@ -16,7 +16,6 @@ def conectar_banco():
         print(f"Erro ao conectar ao banco de dados: {e}")
         return None
 
-
 # Exibir menu principal
 def exibir_menu():
     print("  ====================================")
@@ -27,49 +26,73 @@ def exibir_menu():
     print("3. Fechar")
     print("======================================")
 
-# Função para criar um novo personagem
-def criar_personagem(conn):
-    nome = input("Escolha o nome do seu personagem: ")
-
+# Função para escolher um personagem existente no banco de dados
+def escolher_personagem(conn):
     cursor = conn.cursor()
-    cursor.execute("SELECT id, nome FROM Habilidades")
-    habilidades = cursor.fetchall()
+    cursor.execute("SELECT id, nome FROM Personagem")
+    personagens = cursor.fetchall()
 
-    print("\nEscolha uma habilidade:")
-    for idx, habilidade in habilidades:
-        print(f"{idx}. {habilidade}")
+    print("\nEscolha um personagem:")
+    for idx, personagem in personagens:
+        print(f"{idx}. {personagem}")
 
-    habilidade_escolhida = int(input("\nDigite o número da habilidade escolhida: "))
+    personagem_escolhido = int(input("\nDigite o número do personagem escolhido: "))
 
-    hp = 100
-    forca = 100
+    # Verificar se o personagem escolhido existe
+    cursor.execute("SELECT nome, genero, hp, forca, habilidades, status, localizacao FROM Personagem WHERE id = %s", (personagem_escolhido,))
+    personagem = cursor.fetchone()
 
-    # Inserir o personagem no banco de dados
-    try:
-        cursor.execute("""
-            INSERT INTO Personagem (nome, genero, forca, velocidade, hp, habilidades, status, localizacao)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-        """, (nome, "indefinido", forca, 50, hp, habilidade_escolhida, "vivo", "fazenda"))
-        conn.commit()
-        print(f"\nPersonagem '{nome}' criado com sucesso!")
-    except Exception as e:
-        print(f"Erro ao criar o personagem: {e}")
-        conn.rollback()
-
+    if personagem:
+        print(f"\nPersonagem '{personagem[0]}' escolhido com sucesso!")
+        print(f"Atributos: HP={personagem[2]}, Força={personagem[3]}, Localização={personagem[6]}")
+    else:
+        print("\nPersonagem inválido. Tente novamente.")
+    
     cursor.close()
+    return personagem_escolhido
+
+# Função para exibir e escolher missões
+def escolher_missao(conn):
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, descricao FROM Missao")  # Supondo que exista uma tabela Missao com id e descricao
+    missoes = cursor.fetchall()
+
+    print("\nEscolha uma missão:")
+    for idx, missao in missoes:
+        print(f"{idx}. {missao}")
+
+    missao_escolhida = int(input("\nDigite o número da missão escolhida: "))
+
+    # Verificar se a missão escolhida existe
+    cursor.execute("SELECT descricao FROM Missao WHERE id = %s", (missao_escolhida,))
+    missao = cursor.fetchone()
+
+    if missao:
+        print(f"\nMissão '{missao[0]}' escolhida com sucesso!")
+    else:
+        print("\nMissão inválida. Tente novamente.")
+    
+    cursor.close()
+    return missao_escolhida
 
 # Interação com o NPC "Fazendeiro"
-def interagir_com_fazendeiro():
+def interagir_com_fazendeiro(conn):
     print("\nVocê está na fazenda.")
     print("Fazendeiro: 'Olá novato, vamos começar o trabalho, você pode escolher algumas opções:'")
-    # Aqui você pode adicionar mais lógica para interação com o NPC
+    
+    # Escolher uma missão
+    escolher_missao(conn)
+    
+    # Despedida do fazendeiro
+    print("Fazendeiro: 'Se esforce bastante e você não morrerá nesse apocalipse!'")
 
 # Função para iniciar um novo jogo
 def iniciar_novo_jogo():
     conn = conectar_banco()
     if conn:
-        criar_personagem(conn)
-        interagir_com_fazendeiro()
+        personagem_escolhido = escolher_personagem(conn)
+        if personagem_escolhido:
+            interagir_com_fazendeiro(conn)
         conn.close()
     else:
         print("Não foi possível iniciar o jogo por problemas de conexão com o banco de dados.")
