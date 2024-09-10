@@ -1,5 +1,22 @@
 import os
 import psycopg2
+import time
+import sys
+
+def limpar_tela():
+    # Limpar a tela, verificando o sistema operacional
+    if os.name == 'nt':  # Windows
+        os.system('cls')
+    else:  # Linux e macOS
+        os.system('clear')
+
+def imprimir_lentamente(texto, delay=0.038, fim='\n'):
+    # Função para imprimir o texto letra por letra
+    for char in texto:
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(delay)
+    print(end=fim)  # Para quebrar a linha ao final do texto
 
 def conectar_banco():
     try:
@@ -29,25 +46,69 @@ def exibir_menu():
 # Função para escolher um personagem existente no banco de dados
 def escolher_personagem(conn):
     cursor = conn.cursor()
-    cursor.execute("SELECT id, nome FROM Personagem")
-    personagens = cursor.fetchall()
 
-    print("\nEscolha um personagem:")
-    for idx, personagem in personagens:
-        print(f"{idx}. {personagem}")
+    while True:
+        # Selecionar personagens com ID 1 ou 2
+        cursor.execute("SELECT id, nome FROM Personagem WHERE id IN (1, 2)")
+        personagens = cursor.fetchall()
 
-    personagem_escolhido = int(input("\nDigite o número do personagem escolhido: "))
+        imprimir_lentamente("\nEscolha um personagem:")
+        for idx, personagem in personagens:
+            imprimir_lentamente(f"{idx}. {personagem}")
 
-    # Verificar se o personagem escolhido existe
-    cursor.execute("SELECT nome, genero, hp, forca, habilidades, status, localizacao FROM Personagem WHERE id = %s", (personagem_escolhido,))
-    personagem = cursor.fetchone()
+        
+        # Tentar converter o input para número
+        try:
+            imprimir_lentamente("\nDigite o número do personagem escolhido: ", fim='')
+            personagem_escolhido = int(input())
+        except ValueError:
+            limpar_tela()
+            imprimir_lentamente("\nEntrada inválida. Por favor, digite um número.")
+            continue  # Volta para o início do loop e pede novamente
 
-    if personagem:
-        print(f"\nPersonagem '{personagem[0]}' escolhido com sucesso!")
-        print(f"Atributos: HP={personagem[2]}, Força={personagem[3]}, Localização={personagem[6]}")
-    else:
-        print("\nPersonagem inválido. Tente novamente.")
-    
+        # Verificar se o personagem escolhido é válido (apenas ID 1 ou 2)
+        if personagem_escolhido not in [1, 2]:
+            imprimir_lentamente("\nPersonagem inválido. Escolha um personagem com ID 1 ou 2.")
+            continue
+
+        # Consultar detalhes do personagem
+        cursor.execute("SELECT nome, genero, hp, estado, localizacao FROM Personagem WHERE id = %s", (personagem_escolhido,))
+        personagem = cursor.fetchone()
+
+        if personagem:
+            # Definir atributos pré-definidos para cada personagem
+            if personagem_escolhido == 1:
+                nome, forca, agilidade, habilidades_id = personagem[0], 11, 6, 1  # Atributos para personagem com ID 1
+            elif personagem_escolhido == 2:
+                nome, forca, agilidade, habilidades_id = personagem[0], 7, 10, 2  # Atributos para personagem com ID 2
+            imprimir_lentamente(f"\nPersonagem '{personagem[0]}' escolhido com sucesso!")
+            imprimir_lentamente(f"Atributos: HP={personagem[2]}, Localização={personagem[4]}")
+            imprimir_lentamente(f"Forca = {forca}, Agilidade={agilidade}, habilidade={habilidades_id}")
+
+            # Solicitar confirmação
+            imprimir_lentamente("Deseja confirmar a escolha? (S/N): ", fim='')
+            confirma = input().strip().upper()
+
+            if confirma == "S":
+
+                # Inserir o personagem na tabela Jogador com atributos pré-definidos
+                cursor.execute(
+                    "INSERT INTO Jogador (ID, nome, forca, agilidade, habilidades_ID) VALUES (%s, %s, %s, %s, %s)",
+                    (personagem_escolhido, nome, forca, agilidade, habilidades_id)
+                )
+                conn.commit()
+
+                limpar_tela()
+
+                imprimir_lentamente("\nJogador adicionado com sucesso à tabela!")
+                break  # Saindo do loop, pois a escolha foi confirmada
+            elif confirma == "N":
+                limpar_tela()
+                imprimir_lentamente("\nEscolha novamente um personagem.")
+        else:
+            limpar_tela()
+            imprimir_lentamente("\nPersonagem inválido. Tente novamente.")
+
     cursor.close()
     return personagem_escolhido
 
@@ -109,7 +170,8 @@ def fechar_jogo():
 def main():
     while True:
         exibir_menu()
-        escolha = input("Escolha uma opção: ")
+        imprimir_lentamente("Escolha uma opção: ", fim='')
+        escolha = input()
 
         if escolha == '1':
             iniciar_novo_jogo()

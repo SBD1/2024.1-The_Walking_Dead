@@ -57,14 +57,9 @@ VALUES
 INSERT INTO Personagem (ID, nome, genero, hp, estado, localizacao)
 VALUES
 (1, 'Rick Grimes', 'Masculino', 1000, 'Vivo', 'Fazenda'),
-(2, 'Daryl Dixon', 'Masculino', 1800, 'Vivo', 'Floresta'),
-(3, 'Michonne', 'Feminino', 1000, 'Vivo', 'Fazenda'),
+(2, 'Michonne', 'Feminino', 1000, 'Vivo', 'Fazenda'),
+(3, 'Daryl Dixon', 'Masculino', 1800, 'Vivo', 'Floresta'),
 (4, 'Negan', 'Masculino', 1500, 'Vivo', 'Cidade');
-
-INSERT INTO Jogador (ID, forca, agilidade, habilidades_ID)
-VALUES
-(1, 90, 200, 1),  -- Rick Grimes
-(3, 85, 220, 3);  -- Michonne
 
 INSERT INTO NPC (ID, funcao, dialogo)
 VALUES

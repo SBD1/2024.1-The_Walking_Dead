@@ -78,6 +78,7 @@ CREATE TABLE Personagem (
 
 CREATE TABLE Jogador (
     ID INT PRIMARY KEY,
+    nome VARCHAR(60) NOT NULL,
     forca INT CHECK(forca >= 0) NOT NULL,
     agilidade INT CHECK(agilidade >= 0) NOT NULL,
     habilidades_ID INT,
