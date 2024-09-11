@@ -10,7 +10,7 @@ def limpar_tela():
     else:  # Linux e macOS
         os.system('clear')
 
-def imprimir_lentamente(texto, delay=0.038, fim='\n'):
+def imprimir_lentamente(texto, delay=0.025, fim='\n'):
     # Função para imprimir o texto letra por letra
     for char in texto:
         sys.stdout.write(char)
@@ -147,13 +147,82 @@ def interagir_com_fazendeiro(conn):
     # Despedida do fazendeiro
     print("Fazendeiro: 'Se esforce bastante e você não morrerá nesse apocalipse!'")
 
+def jogo(conn, personagem_escolhido):
+    cursor = conn.cursor()
+
+    # Consultar o jogador e as informações do personagem escolhido
+    cursor.execute(
+        """
+        SELECT j.nome, p.hp, p.estado, p.localizacao, j.forca, j.agilidade
+        FROM Jogador j
+        JOIN Personagem p ON j.ID = p.ID
+        WHERE j.ID = %s
+        """, 
+        (personagem_escolhido,)
+    )
+    jogador = cursor.fetchone()
+
+    if not jogador:
+        print("Nenhum jogador encontrado com o personagem selecionado.")
+        return
+
+    # Extrair as informações do personagem e do jogador
+    nome_jogador = jogador[0]  # Nome do jogador
+    hp_atual = jogador[1]  # HP do personagem
+    hp_total = 100  # Supondo que o HP total seja 100 para todos os personagens (ajuste conforme necessário)
+    estado = jogador[2]  # Estado do personagem
+    localizacao = jogador[3]  # Localização do personagem
+    forca = jogador[4]  # Força do jogador
+    agilidade = jogador[5]  # Agilidade do jogador
+
+    while True:
+        # Exibir as informações do personagem
+        imprimir_lentamente(f"\n-- Informações do Jogador --")
+        imprimir_lentamente(f"Nome do Jogador: {nome_jogador}")
+        imprimir_lentamente(f"HP: {hp_atual}/{hp_total}")
+        imprimir_lentamente(f"Estado: {estado}")
+        imprimir_lentamente(f"Localização: {localizacao}")
+        imprimir_lentamente(f"Atributos: Força={forca}, Agilidade={agilidade}")
+
+        # Exibir o menu de opções
+        imprimir_lentamente("\n-- O que você deseja fazer? --")
+        imprimir_lentamente("1. Acessar inventário")
+        imprimir_lentamente("2. Interagir com o NPC local")
+        imprimir_lentamente("3. Mover para outro local")
+        imprimir_lentamente("4. Lutar contra o zumbi presente")
+        imprimir_lentamente("5. Sair do jogo")
+
+        # Capturar a escolha do jogador
+        escolha = input("\nEscolha uma opção: ")
+
+        if escolha == "1":
+            imprimir_lentamente("\nAcessando o inventário...")
+            # Implementar lógica do inventário
+        elif escolha == "2":
+            imprimir_lentamente("\nInteragindo com o NPC local...")
+            # Implementar lógica de interação com NPC
+            interagir_com_fazendeiro(conn)
+        elif escolha == "3":
+            imprimir_lentamente("\nMovendo-se para outro local...")
+            # Implementar lógica de movimentação
+        elif escolha == "4":
+            imprimir_lentamente("\nLutando contra o zumbi presente...")
+            # Implementar lógica de combate
+        elif escolha == "5":
+            imprimir_lentamente("\nSaindo do jogo...")
+            break  # Sai do loop e encerra o jogo
+        else:
+            print("\nOpção inválida. Tente novamente.")
+
+    cursor.close()
+
 # Função para iniciar um novo jogo
 def iniciar_novo_jogo():
     conn = conectar_banco()
     if conn:
         personagem_escolhido = escolher_personagem(conn)
         if personagem_escolhido:
-            interagir_com_fazendeiro(conn)
+            jogo(conn, personagem_escolhido)
         conn.close()
     else:
         print("Não foi possível iniciar o jogo por problemas de conexão com o banco de dados.")
