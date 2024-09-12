@@ -78,9 +78,9 @@ def escolher_personagem(conn):
         if personagem:
             # Definir atributos pré-definidos para cada personagem
             if personagem_escolhido == 1:
-                nome, forca, agilidade, habilidades_id = personagem[0], 11, 6, 1  # Atributos para personagem com ID 1
+                nome, forca, agilidade, habilidades_id, hp, estado, localizacao = personagem[0], 11, 6, 1, personagem[2], personagem[3], personagem[4]  # Atributos para personagem com ID 1
             elif personagem_escolhido == 2:
-                nome, forca, agilidade, habilidades_id = personagem[0], 7, 10, 2  # Atributos para personagem com ID 2
+                nome, forca, agilidade, habilidades_id, hp, estado, localizacao = personagem[0], 7, 10, 2, personagem[2], personagem[3], personagem[4]  # Atributos para personagem com ID 2
             imprimir_lentamente(f"\nPersonagem '{personagem[0]}' escolhido com sucesso!")
             imprimir_lentamente(f"Atributos: HP={personagem[2]}, Localização={personagem[4]}")
             imprimir_lentamente(f"Forca = {forca}, Agilidade={agilidade}, habilidade={habilidades_id}")
@@ -93,8 +93,8 @@ def escolher_personagem(conn):
 
                 # Inserir o personagem na tabela Jogador com atributos pré-definidos
                 cursor.execute(
-                    "INSERT INTO Jogador (ID, nome, forca, agilidade, habilidades_ID) VALUES (%s, %s, %s, %s, %s)",
-                    (personagem_escolhido, nome, forca, agilidade, habilidades_id)
+                    "INSERT INTO Jogador (ID_personagem, nome, forca, agilidade, habilidades_ID, hp, estado, localizacao) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+                    (personagem_escolhido, nome, forca, agilidade, habilidades_id, hp, estado, localizacao)
                 )
                 conn.commit()
 
@@ -153,9 +153,8 @@ def jogo(conn, personagem_escolhido):
     # Consultar o jogador e as informações do personagem escolhido
     cursor.execute(
         """
-        SELECT j.nome, p.hp, p.estado, p.localizacao, j.forca, j.agilidade
+        SELECT j.nome, j.hp, j.estado, j.localizacao, j.forca, j.agilidade
         FROM Jogador j
-        JOIN Personagem p ON j.ID = p.ID
         WHERE j.ID = %s
         """, 
         (personagem_escolhido,)

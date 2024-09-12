@@ -77,12 +77,17 @@ CREATE TABLE Personagem (
 );
 
 CREATE TABLE Jogador (
-    ID INT PRIMARY KEY,
+    ID SERIAL PRIMARY KEY,
+    ID_personagem INT,
     nome VARCHAR(60) NOT NULL,
     forca INT CHECK(forca >= 0) NOT NULL,
     agilidade INT CHECK(agilidade >= 0) NOT NULL,
     habilidades_ID INT,
-    FOREIGN KEY (ID) REFERENCES Personagem(ID),
+    missao_completada INT,
+    hp INT CHECK(HP >= 0) NOT NULL,
+    estado VARCHAR(60) NOT NULL,
+    localizacao VARCHAR(60) NOT NULL,
+    FOREIGN KEY (ID_personagem) REFERENCES Personagem(ID),
     FOREIGN KEY (habilidades_ID) REFERENCES Habilidades(ID)
 );
 
