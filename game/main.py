@@ -106,7 +106,7 @@ def listar_locais_disponiveis(conn):
 
     imprimir_lentamente("\n-- Locais Disponíveis --")
     for idx, nome, descricao, dificuldade in locais:
-        imprimir_lentamente(f"{idx}. {nome} - {descricao} (Dificuldade: {dificuldade})")
+        print(f"{idx}. {nome} - {descricao} (Dificuldade: {dificuldade})")
 
     cursor.close()
     return locais
@@ -201,25 +201,25 @@ def lutar_contra_zumbi(conn, jogador_id):
 
 # Adicionar a opção de luta no jogo principal:
 def jogo(conn, personagem_escolhido):
-    cursor = conn.cursor()
-
-    cursor.execute(
-        """
-        SELECT j.nome, j.hp, j.estado, j.localizacao, j.forca, j.agilidade
-        FROM Jogador j
-        WHERE j.ID = %s
-        """, 
-        (personagem_escolhido,)
-    )
-    jogador = cursor.fetchone()
-
-    if not jogador:
-        print("Nenhum jogador encontrado com o personagem selecionado.")
-        return
-
-    nome_jogador, hp_atual, estado, localizacao, forca, agilidade = jogador
 
     while True:
+        cursor = conn.cursor()
+
+        cursor.execute(
+            """
+            SELECT j.nome, j.hp, j.estado, j.localizacao, j.forca, j.agilidade
+            FROM Jogador j
+            WHERE j.ID = %s
+            """, 
+            (personagem_escolhido,)
+        )
+        jogador = cursor.fetchone()
+
+        if not jogador:
+            print("Nenhum jogador encontrado com o personagem selecionado.")
+            return
+
+        nome_jogador, hp_atual, estado, localizacao, forca, agilidade = jogador
         imprimir_lentamente(f"\n-- Informações do Jogador --")
         imprimir_lentamente(f"Nome do Jogador: {nome_jogador}")
         imprimir_lentamente(f"HP: {hp_atual}/100")
@@ -240,7 +240,6 @@ def jogo(conn, personagem_escolhido):
             imprimir_lentamente("\nAcessando o inventário...")
         elif escolha == "2":
             imprimir_lentamente("\nInteragindo com o NPC local...")
-            interagir_com_fazendeiro(conn)
         elif escolha == "3":
             imprimir_lentamente("\nMovendo-se para outro local...")
             mover_para_local(conn, personagem_escolhido)
