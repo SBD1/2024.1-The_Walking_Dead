@@ -59,12 +59,14 @@ VALUES
 (1, 'Rick Grimes', 'Masculino', 1000, 'Vivo', 'Fazenda'),
 (2, 'Michonne', 'Feminino', 1000, 'Vivo', 'Fazenda'),
 (3, 'Daryl Dixon', 'Masculino', 1800, 'Vivo', 'Floresta'),
-(4, 'Negan', 'Masculino', 1500, 'Vivo', 'Cidade');
+(4, 'Negan', 'Masculino', 1500, 'Vivo', 'Cidade'),
+(5, 'Fazendeiro', 'Masculino', 1000, 'Vivo', 'Fazenda');
 
 INSERT INTO NPC (ID, funcao, dialogo)
 VALUES
 (2, 'Daryl', 'Estou com depressao'),  -- Daryl
-(4, 'Líder dos Salvadores', 'Aqui as coisas são feitas do meu jeito.');  -- Negan
+(4, 'Líder dos Salvadores', 'Aqui as coisas são feitas do meu jeito.'),  -- Negan
+(5, 'Fazendeiro', 'Vamos começar os trabalhos.');  -- Fazendeiro
 
 INSERT INTO Regiao (ID, nome, descricao) 
 VALUES 

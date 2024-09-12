@@ -310,12 +310,11 @@ def interagir_com_npc(conn, jogador_id):
 
     cursor.close()
 
-# Adicionar a opção de interagir com o NPC no jogo principal:
 def jogo(conn, personagem_escolhido):
-
     while True:
         cursor = conn.cursor()
 
+        # Obter informações do jogador
         cursor.execute(
             """
             SELECT j.nome, j.hp, j.estado, j.localizacao, j.forca, j.agilidade
@@ -338,6 +337,61 @@ def jogo(conn, personagem_escolhido):
         imprimir_lentamente(f"Localização: {localizacao}")
         imprimir_lentamente(f"Atributos: Força={forca}, Agilidade={agilidade}")
 
+        # Verificar se há NPC na localização atual
+        cursor.execute(
+            """
+            SELECT p.nome, n.funcao
+            FROM NPC n
+            JOIN Personagem p ON n.ID = p.ID
+            WHERE p.localizacao = %s AND p.ID NOT IN (1, 2)
+            """, 
+            (localizacao,)
+        )
+        npc = cursor.fetchone()
+
+        if npc:
+            nome_npc, funcao_npc = npc
+            imprimir_lentamente(f"\nNPC presente: {nome_npc} ({funcao_npc})")
+        else:
+            imprimir_lentamente("\nNenhum NPC presente.")
+
+        # Verificar se há zumbi na localização atual
+        cursor.execute(
+            """
+            SELECT z.ID, z.forca, z.velocidade, z.hp
+            FROM Instancia_Zumbi iz
+            JOIN Zumbi z ON iz.ID_Zumbi = z.ID
+            WHERE iz.localizacao = %s
+            """, 
+            (localizacao,)
+        )
+        zumbi = cursor.fetchone()
+
+        if zumbi:
+            zumbi_id, zumbi_forca, zumbi_velocidade, zumbi_hp = zumbi
+            imprimir_lentamente(f"\nZumbi presente: Força={zumbi_forca}, Velocidade={zumbi_velocidade}, HP={zumbi_hp}")
+        else:
+            imprimir_lentamente("\nNenhum zumbi presente.")
+
+        # Verificar se há item na localização atual
+        cursor.execute(
+            """
+            SELECT it.nome, it.descricao
+            FROM Instancia_Item ii
+            JOIN Item it ON ii.Item_ID = it.ID
+            WHERE ii.localizacao = %s
+            """, 
+            (localizacao,)
+        )
+        item = cursor.fetchone()
+
+        if item:
+            nome_item, descricao_item = item
+            imprimir_lentamente(f"\nItem presente: {nome_item} - {descricao_item}")
+        else:
+            imprimir_lentamente("\nNenhum item presente.")
+
+        # Opções do jogador
         imprimir_lentamente("\n-- O que você deseja fazer? --")
         imprimir_lentamente("1. Acessar inventário")
         imprimir_lentamente("2. Interagir com o NPC local")
@@ -351,21 +405,28 @@ def jogo(conn, personagem_escolhido):
             imprimir_lentamente("\nAcessando o inventário...")
             acessar_inventario(conn, personagem_escolhido)
         elif escolha == "2":
-            imprimir_lentamente("\nInteragindo com o NPC local...")
-            interagir_com_npc(conn, personagem_escolhido)
+            if npc:
+                imprimir_lentamente("\nInteragindo com o NPC local...")
+                interagir_com_npc(conn, personagem_escolhido)
+            else:
+                imprimir_lentamente("\nNão há NPCs para interagir.")
         elif escolha == "3":
             imprimir_lentamente("\nMovendo-se para outro local...")
             mover_para_local(conn, personagem_escolhido)
         elif escolha == "4":
-            imprimir_lentamente("\nLutando contra o zumbi presente...")
-            lutar_contra_zumbi(conn, personagem_escolhido)
+            if zumbi:
+                imprimir_lentamente("\nLutando contra o zumbi presente...")
+                lutar_contra_zumbi(conn, personagem_escolhido)
+            else:
+                imprimir_lentamente("\nNão há zumbis para lutar.")
         elif escolha == "5":
             imprimir_lentamente("\nSaindo do jogo...")
             break
         else:
-            print("\nOpção inválida. Tente novamente.")
+            imprimir_lentamente("\nOpção inválida. Tente novamente.")
 
     cursor.close()
+
 
 
 
