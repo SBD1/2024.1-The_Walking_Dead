@@ -151,10 +151,10 @@ CREATE TABLE Instancia_Item (
 
 -- Tabela: Inventário
 CREATE TABLE Inventario (
-    ID INT PRIMARY KEY,
-    Personagem_ID INT NOT NULL,
+    ID SERIAL PRIMARY KEY,
+    Jogador_ID INT NOT NULL,
     Tamanho INT CHECK(Tamanho >= 1 AND Tamanho <= 50) NOT NULL,
-    FOREIGN KEY (Personagem_ID) REFERENCES Personagem(ID)
+    FOREIGN KEY (Jogador_ID) REFERENCES Jogador(ID)
 );
 
 CREATE TABLE Inventario_item (

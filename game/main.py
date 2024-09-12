@@ -9,7 +9,7 @@ def limpar_tela():
     else:  # Linux e macOS
         os.system('clear')
 
-def imprimir_lentamente(texto, delay=0.025, fim='\n'):
+def imprimir_lentamente(texto, delay=0.01, fim='\n'):
     for char in texto:
         sys.stdout.write(char)
         sys.stdout.flush()
@@ -81,8 +81,14 @@ def escolher_personagem(conn):
 
             if confirma == "S":
                 cursor.execute(
-                    "INSERT INTO Jogador (ID_personagem, nome, forca, agilidade, habilidades_ID, hp, estado, localizacao) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+                    "INSERT INTO Jogador (ID_personagem, nome, forca, agilidade, habilidades_ID, hp, estado, localizacao) VALUES (%s, %s, %s, %s, %s, %s, %s, %s) RETURNING ID",
                     (personagem_escolhido, nome, forca, agilidade, habilidades_id, hp, estado, localizacao)
+                )
+
+                jogador_id = cursor.fetchone()[0]
+                cursor.execute(
+                    "INSERT INTO Inventario (Jogador_ID, Tamanho) VALUES (%s, %s)",
+                    (jogador_id, 15)  # Tamanho do inventário é 15
                 )
                 conn.commit()
 
@@ -199,6 +205,45 @@ def lutar_contra_zumbi(conn, jogador_id):
 
     cursor.close()
 
+def acessar_inventario(conn, personagem_escolhido):
+    cursor = conn.cursor()
+
+    # Obter o ID do jogador relacionado ao personagem escolhido
+    cursor.execute("SELECT ID FROM Jogador WHERE ID_personagem = %s", (personagem_escolhido,))
+    jogador_id = cursor.fetchone()[0]
+
+    # Obter o inventário do jogador
+    cursor.execute("SELECT Tamanho FROM Inventario WHERE Jogador_ID = %s", (jogador_id,))
+    inventario = cursor.fetchone()
+
+    if inventario:
+        tamanho_inventario = inventario[0]
+        imprimir_lentamente(f"\n-- Inventário do Jogador --\nTamanho: {tamanho_inventario}")
+
+        # Selecionar os itens no inventário do jogador
+        cursor.execute("""
+            SELECT ii.ID_item, it.nome, it.descricao
+            FROM Inventario_item ii
+            JOIN Instancia_Item i ON ii.ID_item = i.ID
+            JOIN Item it ON ii.ID_item = it.ID
+            WHERE ii.ID_inventario = (SELECT ID FROM Inventario WHERE Jogador_ID = %s)
+        """, (jogador_id,))
+
+        itens = cursor.fetchall()
+
+        if itens:
+            imprimir_lentamente("\nItens no inventário:")
+            for item in itens:
+                imprimir_lentamente(f"ID: {item[0]}, Nome: {item[1]}, Descrição: {item[2]}")
+        else:
+            imprimir_lentamente("\nO inventário está vazio.")
+    else:
+        imprimir_lentamente("\nInventário não encontrado para o jogador.")
+
+    cursor.close()
+
+
+
 # Adicionar a opção de luta no jogo principal:
 def jogo(conn, personagem_escolhido):
 
@@ -238,6 +283,7 @@ def jogo(conn, personagem_escolhido):
 
         if escolha == "1":
             imprimir_lentamente("\nAcessando o inventário...")
+            acessar_inventario(conn, personagem_escolhido)
         elif escolha == "2":
             imprimir_lentamente("\nInteragindo com o NPC local...")
         elif escolha == "3":

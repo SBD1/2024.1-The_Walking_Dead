@@ -121,19 +121,14 @@ VALUES
 (11, 11, 'Centro Comunitário'),
 (12, 12, 'Refúgio');
 
-INSERT INTO Inventario (ID, Personagem_ID, tamanho)
-VALUES
-(1, 1, 10),
-(2, 2, 5),
-(3, 3, 5),
-(4, 4, 5);
+--INSERT INTO Inventario (ID, tamanho)
+--VALUES
+--(1, 10);
 
 
-INSERT INTO inventario_item (ID_inventario, ID_item)
-VALUES
-(1, 1), (1, 2), (1, 3), (1, 4),
-(2, 1), (2, 2), (2, 3),
-(3, 1), (3, 2), (3, 3),
-(4, 1), (4, 2), (4, 3);
+
+---INSERT INTO inventario_item (ID_inventario, ID_item)
+---VALUES
+---(1, 1), (1, 2), (1, 3), (1, 4);
 
 commit;
