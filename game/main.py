@@ -137,6 +137,69 @@ def mover_para_local(conn, jogador_id):
     imprimir_lentamente(f"\nVocê se moveu para {local_nome}.")
     cursor.close()
 
+def lutar_contra_zumbi(conn, jogador_id):
+    cursor = conn.cursor()
+
+    # Buscar localização atual do jogador
+    cursor.execute("SELECT localizacao, forca, hp FROM Jogador WHERE ID = %s", (jogador_id,))
+    jogador = cursor.fetchone()
+    if not jogador:
+        imprimir_lentamente("Erro: Jogador não encontrado.")
+        return
+
+    localizacao_jogador, forca_jogador, hp_jogador = jogador
+
+    # Verificar se há um zumbi na mesma localização
+    cursor.execute("""
+        SELECT z.id, z.forca, z.velocidade, z.hp, iz.estado
+        FROM Zumbi z
+        JOIN Instancia_Zumbi iz ON z.id = iz.ID_Zumbi
+        WHERE iz.localizacao = %s AND iz.estado = 'Ativo'
+    """, (localizacao_jogador,))
+    zumbi = cursor.fetchone()
+
+    if not zumbi:
+        imprimir_lentamente(f"Não há nenhum zumbi ativo em {localizacao_jogador}.")
+        return
+
+    id_zumbi, forca_zumbi, velocidade_zumbi, hp_zumbi, estado_zumbi = zumbi
+
+    imprimir_lentamente(f"\nVocê encontrou um zumbi na {localizacao_jogador}!")
+    imprimir_lentamente(f"Zumbi - HP: {hp_zumbi}, Força: {forca_zumbi}, Velocidade: {velocidade_zumbi}")
+    imprimir_lentamente(f"Prepare-se para a batalha!")
+
+    # Loop da batalha
+    while hp_jogador > 0 and hp_zumbi > 0:
+        # Turno do jogador
+        imprimir_lentamente("\nSeu turno de ataque!")
+        imprimir_lentamente(f"Você ataca o zumbi com força {forca_jogador}!")
+        hp_zumbi -= forca_jogador
+        if hp_zumbi <= 0:
+            imprimir_lentamente("Você derrotou o zumbi!")
+            cursor.execute("UPDATE Instancia_Zumbi SET estado = 'Inativo' WHERE ID_Zumbi = %s", (id_zumbi,))
+            conn.commit()
+            break
+        imprimir_lentamente(f"O zumbi ainda tem {hp_zumbi} de HP.")
+
+        # Turno do zumbi
+        imprimir_lentamente("\nTurno do zumbi!")
+        imprimir_lentamente(f"O zumbi ataca com força {forca_zumbi}!")
+        hp_jogador -= forca_zumbi
+        if hp_jogador <= 0:
+            imprimir_lentamente("Você foi derrotado pelo zumbi!")
+            cursor.execute("UPDATE Jogador SET hp = 0 WHERE ID = %s", (jogador_id,))
+            conn.commit()
+            break
+        imprimir_lentamente(f"Você ainda tem {hp_jogador} de HP.")
+
+    # Atualizar o HP do jogador e do zumbi no banco de dados
+    cursor.execute("UPDATE Jogador SET hp = %s WHERE ID = %s", (hp_jogador, jogador_id))
+    cursor.execute("UPDATE Zumbi SET hp = %s WHERE id = %s", (hp_zumbi, id_zumbi))
+    conn.commit()
+
+    cursor.close()
+
+# Adicionar a opção de luta no jogo principal:
 def jogo(conn, personagem_escolhido):
     cursor = conn.cursor()
 
@@ -183,6 +246,7 @@ def jogo(conn, personagem_escolhido):
             mover_para_local(conn, personagem_escolhido)
         elif escolha == "4":
             imprimir_lentamente("\nLutando contra o zumbi presente...")
+            lutar_contra_zumbi(conn, personagem_escolhido)
         elif escolha == "5":
             imprimir_lentamente("\nSaindo do jogo...")
             break
@@ -190,6 +254,7 @@ def jogo(conn, personagem_escolhido):
             print("\nOpção inválida. Tente novamente.")
 
     cursor.close()
+
 
 def iniciar_novo_jogo():
     conn = conectar_banco()
