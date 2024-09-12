@@ -244,7 +244,73 @@ def acessar_inventario(conn, personagem_escolhido):
 
 
 
-# Adicionar a opção de luta no jogo principal:
+def interagir_com_npc(conn, jogador_id):
+    cursor = conn.cursor()
+
+    # Buscar localização atual do jogador
+    cursor.execute("SELECT localizacao FROM Jogador WHERE ID = %s", (jogador_id,))
+    jogador = cursor.fetchone()
+    if not jogador:
+        imprimir_lentamente("Erro: Jogador não encontrado.")
+        return
+
+    localizacao_jogador = jogador[0]
+
+    # Verificar se há um NPC na mesma localização
+    cursor.execute("""
+        SELECT n.id, n.nome, n.dialogo
+        FROM NPC n
+        JOIN Instancia_NPC i ON n.id = i.ID_NPC
+        WHERE i.localizacao = %s
+    """, (localizacao_jogador,))
+    npc = cursor.fetchone()
+
+    if not npc:
+        imprimir_lentamente(f"Não há nenhum NPC ativo em {localizacao_jogador}.")
+        return
+
+    npc_id, npc_nome, npc_dialogo = npc
+
+    imprimir_lentamente(f"\nVocê encontrou o NPC {npc_nome} em {localizacao_jogador}!")
+    imprimir_lentamente(f"{npc_nome} diz: {npc_dialogo}")
+
+    # Listar missões disponíveis
+    cursor.execute("""
+        SELECT m.ID, m.nome, m.descricao, m.tipo, m.premio
+        FROM Missao m
+        JOIN Instancia_Missao im ON m.ID = im.ID_Missao
+        WHERE im.ID_NPC = %s AND im.estado = 'Disponível'
+    """, (npc_id,))
+    missoes = cursor.fetchall()
+
+    if not missoes:
+        imprimir_lentamente("\nNão há missões disponíveis com este NPC.")
+        return
+
+    imprimir_lentamente("\nMissões disponíveis:")
+    for missao in missoes:
+        missao_id, nome, descricao, tipo, premio = missao
+        imprimir_lentamente(f"ID: {missao_id}, Nome: {nome}, Descrição: {descricao}, Tipo: {tipo}, Prêmio: {premio}")
+
+    # Escolher missão
+    try:
+        imprimir_lentamente("\nDigite o ID da missão que deseja aceitar: ", fim='')
+        missao_escolhida = int(input())
+    except ValueError:
+        imprimir_lentamente("Entrada inválida. Por favor, digite um número.")
+        return
+
+    # Verificar se a missão escolhida está disponível
+    if any(m[0] == missao_escolhida for m in missoes):
+        cursor.execute("UPDATE Instancia_Missao SET estado = 'Aceita' WHERE ID_Missao = %s AND ID_NPC = %s", (missao_escolhida, npc_id))
+        conn.commit()
+        imprimir_lentamente(f"\nVocê aceitou a missão '{missao_escolhida}' com sucesso!")
+    else:
+        imprimir_lentamente("\nMissão inválida. Tente novamente.")
+
+    cursor.close()
+
+# Adicionar a opção de interagir com o NPC no jogo principal:
 def jogo(conn, personagem_escolhido):
 
     while True:
@@ -286,6 +352,7 @@ def jogo(conn, personagem_escolhido):
             acessar_inventario(conn, personagem_escolhido)
         elif escolha == "2":
             imprimir_lentamente("\nInteragindo com o NPC local...")
+            interagir_com_npc(conn, personagem_escolhido)
         elif escolha == "3":
             imprimir_lentamente("\nMovendo-se para outro local...")
             mover_para_local(conn, personagem_escolhido)
@@ -299,6 +366,7 @@ def jogo(conn, personagem_escolhido):
             print("\nOpção inválida. Tente novamente.")
 
     cursor.close()
+
 
 
 def iniciar_novo_jogo():
