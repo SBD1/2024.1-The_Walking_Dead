@@ -222,7 +222,7 @@ def jogo(conn, personagem_escolhido):
         nome_jogador, hp_atual, estado, localizacao, forca, agilidade = jogador
         imprimir_lentamente(f"\n-- Informações do Jogador --")
         imprimir_lentamente(f"Nome do Jogador: {nome_jogador}")
-        imprimir_lentamente(f"HP: {hp_atual}/100")
+        imprimir_lentamente(f"HP: {hp_atual}/1000")
         imprimir_lentamente(f"Estado: {estado}")
         imprimir_lentamente(f"Localização: {localizacao}")
         imprimir_lentamente(f"Atributos: Força={forca}, Agilidade={agilidade}")
@@ -266,8 +266,41 @@ def iniciar_novo_jogo():
         print("Não foi possível iniciar o jogo por problemas de conexão com o banco de dados.")
 
 def carregar_jogo():
-    print("\nCarregando jogo salvo...")
-    pass
+    conn = conectar_banco()
+    cursor = conn.cursor()
+
+    # Consultar todos os jogadores na tabela Jogador
+    cursor.execute("SELECT ID, nome, localizacao, missao_completada FROM Jogador")
+    jogadores = cursor.fetchall()
+
+    if not jogadores:
+        print("Nenhum jogo salvo encontrado.")
+        return None
+
+    # Exibir os jogadores disponíveis
+    print("\n-- Jogos Salvos --")
+    for jogador in jogadores:
+        imprimir_lentamente(f"ID: {jogador[0]}, Nome: {jogador[1]}, Localização: {jogador[2]}, Missão Completada: {jogador[3]}")
+
+    # Solicitar que o usuário escolha um jogador pelo ID
+    try:
+        imprimir_lentamente("\nDigite o ID do jogador que deseja carregar: ", fim="")
+        jogador_escolhido = int(input())
+        
+        # Verificar se o ID selecionado está na lista de jogadores
+        if any(j[0] == jogador_escolhido for j in jogadores):
+            imprimir_lentamente(f"Jogador com ID {jogador_escolhido} carregado com sucesso!")
+            jogo(conn, jogador_escolhido)
+            return jogador_escolhido  # Retorna o ID do jogador selecionado
+        else:
+            print("\nID inválido. Tente novamente.")
+            return None
+    except ValueError:
+        print("\nEntrada inválida. Tente novamente.")
+        return None
+    finally:
+        cursor.close()
+
 
 def fechar_jogo():
     print("\nSaindo do jogo... Até mais!")

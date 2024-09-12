@@ -129,7 +129,7 @@ CREATE TABLE Zumbi (
     ID INT PRIMARY KEY,
     forca INT CHECK(Forca >= 0) NOT NULL,
     velocidade INT CHECK(velocidade >= 0) NOT NULL,
-    hp INT CHECK(HP >= 0) NOT NULL
+    hp INT NOT NULL
 );
 
 -- Criando a tabela Instancia_Zumbi

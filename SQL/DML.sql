@@ -94,10 +94,10 @@ VALUES
 
 INSERT INTO Zumbi (id, forca, velocidade, hp)
 VALUES
-(1, 40, 30, 100),
-(2, 50, 20, 150),
-(3, 60, 25, 120),
-(4, 55, 35, 130);
+(1, 40, 30, 50),
+(2, 50, 20, 75),
+(3, 60, 25, 60),
+(4, 55, 35, 65);
 
 INSERT INTO Instancia_Zumbi (ID_Zumbi, estado, localizacao)
 VALUES
