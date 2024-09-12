@@ -84,7 +84,8 @@ VALUES
 (5, 'Cabana Abandonada', 'Floresta', 'Uma pequena cabana no meio da floresta, isolada e de difícil acesso.', 5, 30),
 (6, 'Rio Congelado', 'Floresta', 'Um rio que corta a floresta, perigoso por suas águas rápidas e geladas.', 8, 40),
 (7, 'Praça Central de Woodbury', 'Cidade', 'O centro da cidade, cercado por lojas e casas abandonadas.', 12, 50),
-(8, 'Muralha de Woodbury', 'Cidade', 'A fortificação que protege a cidade de invasores e zumbis.', 7, 60);
+(8, 'Muralha de Woodbury', 'Cidade', 'A fortificação que protege a cidade de invasores e zumbis.', 7, 60),
+(9, 'Fazenda', 'Floresta', 'Zona inicial dos jogadores', 3, 10);
 
 INSERT INTO Missao (ID, nome, descricao, tipo, premio)
 VALUES
@@ -109,19 +110,30 @@ VALUES
 (4, 'Ativo', 'Posto de Controle');
 
 INSERT INTO Instancia_Item (ID, Item_ID, localizacao)
-VALUES 
-(1, 1, 'Posto de Gasolina'),
-(2, 2, 'Casa Abandonada'),
-(3, 3, 'Loja de Roupas'),
-(4, 4, 'Farmácia'),
-(5, 5, 'Hospital'),
-(6, 6, 'Escola Abandonada'),
-(7, 7, 'Quartel Militar'),
-(8, 8, 'Oficina Mecânica'),
-(9, 9, 'Posto de Guarda'),
-(10, 10, 'Departamento de Polícia'),
-(11, 11, 'Centro Comunitário'),
-(12, 12, 'Refúgio');
+VALUES
+(1, 1, 'Centro de Atlanta'), -- Machete
+(2, 2, 'Centro de Atlanta'), -- Revolver
+(3, 4, 'Centro de Atlanta'), -- Bandagem
+(4, 3, 'Subúrbios de Atlanta'), -- Jaqueta de Couro
+(5, 5, 'Subúrbios de Atlanta'), -- Pílula de Antibiótico
+(6, 6, 'Subúrbios de Atlanta'), -- Espingarda
+(7, 7, 'Bloco C'), -- Capacete de Combate
+(8, 10, 'Bloco C'), -- Armadura Corporal
+(9, 11, 'Bloco C'), -- Kit de Primeiros Socorros
+(10, 1, 'Pátio da Prisão'), -- Machete
+(11, 9, 'Pátio da Prisão'), -- Faca de Combate
+(12, 6, 'Cabana Abandonada'), -- Espingarda
+(13, 4, 'Cabana Abandonada'), -- Bandagem
+(14, 5, 'Rio Congelado'), -- Pílula de Antibiótico
+(15, 12, 'Rio Congelado'), -- Água Purificada
+(16, 3, 'Praça Central de Woodbury'), -- Jaqueta de Couro
+(17, 2, 'Praça Central de Woodbury'), -- Revolver
+(18, 11, 'Praça Central de Woodbury'), -- Kit de Primeiros Socorros
+(19, 7, 'Muralha de Woodbury'), -- Capacete de Combate
+(20, 10, 'Muralha de Woodbury'), -- Armadura Corporal
+(21, 9, 'Fazenda'), -- Faca de Combate
+(22, 12, 'Fazenda'); -- Água Purificada
+
 
 --INSERT INTO Inventario (ID, tamanho)
 --VALUES

@@ -13,7 +13,8 @@ services:
     volumes:
       - ./SQL/DDL.sql:/docker-entrypoint-initdb.d/0DDL.sql
       - ./SQL/DML.sql:/docker-entrypoint-initdb.d/1DML.sql
-      - ./SQL/create_user.sql:/docker-entrypoint-initdb.d/2create_user.sql
+      - ./SQL/Triggers_e_SP.SQL:/docker-entrypoint-initdb.d/2Triggers_e_SP.SQL
+      - ./SQL/create_user.sql:/docker-entrypoint-initdb.d/3create_user.sql
     expose:
       - "5432"
     restart: always

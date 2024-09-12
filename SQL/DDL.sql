@@ -158,9 +158,9 @@ CREATE TABLE Inventario (
 );
 
 CREATE TABLE Inventario_item (
+    ID SERIAL PRIMARY KEY,
     ID_inventario INT,
     ID_item INT,
-    PRIMARY KEY (ID_inventario, ID_item),
     FOREIGN KEY (ID_inventario) REFERENCES Inventario(ID),
     FOREIGN KEY (ID_item) REFERENCES Instancia_Item(ID)
 );

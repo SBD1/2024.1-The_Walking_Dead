@@ -16,7 +16,7 @@ def imprimir_lentamente(texto, delay=0.01, fim='\n'):
         time.sleep(delay)
     print(end=fim)
 
-def conectar_banco():
+def conectar_banco():   
     try:
         conn = psycopg2.connect(
             dbname="the_walking_dead",
@@ -213,21 +213,21 @@ def acessar_inventario(conn, personagem_escolhido):
     jogador_id = cursor.fetchone()[0]
 
     # Obter o inventário do jogador
-    cursor.execute("SELECT Tamanho FROM Inventario WHERE Jogador_ID = %s", (jogador_id,))
+    cursor.execute("SELECT ID, Tamanho FROM Inventario WHERE Jogador_ID = %s", (jogador_id,))
     inventario = cursor.fetchone()
 
     if inventario:
-        tamanho_inventario = inventario[0]
+        inventario_id, tamanho_inventario = inventario
         imprimir_lentamente(f"\n-- Inventário do Jogador --\nTamanho: {tamanho_inventario}")
 
         # Selecionar os itens no inventário do jogador
         cursor.execute("""
-            SELECT ii.ID_item, it.nome, it.descricao
+            SELECT it.ID, it.nome, it.descricao
             FROM Inventario_item ii
-            JOIN Instancia_Item i ON ii.ID_item = i.ID
-            JOIN Item it ON ii.ID_item = it.ID
-            WHERE ii.ID_inventario = (SELECT ID FROM Inventario WHERE Jogador_ID = %s)
-        """, (jogador_id,))
+            JOIN Instancia_Item inst ON ii.ID_item = inst.ID
+            JOIN Item it ON inst.Item_ID = it.ID
+            WHERE ii.ID_inventario = %s
+        """, (inventario_id,))
 
         itens = cursor.fetchall()
 
@@ -241,7 +241,6 @@ def acessar_inventario(conn, personagem_escolhido):
         imprimir_lentamente("\nInventário não encontrado para o jogador.")
 
     cursor.close()
-
 
 
 def interagir_com_npc(conn, jogador_id):
@@ -309,6 +308,77 @@ def interagir_com_npc(conn, jogador_id):
         imprimir_lentamente("\nMissão inválida. Tente novamente.")
 
     cursor.close()
+
+def pegar_item(conn, personagem_escolhido):
+    cursor = conn.cursor()
+
+    # Verifica o inventário do jogador
+    cursor.execute("""
+        SELECT ID, Tamanho
+        FROM Inventario
+        WHERE Jogador_ID = %s
+    """, (personagem_escolhido,))
+    inventario = cursor.fetchone()
+
+    if not inventario:
+        print("Inventário não encontrado para o jogador.")
+        return
+
+    inventario_id, tamanho_atual = inventario
+
+    # Verifica o número de itens já no inventário
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM Inventario_item
+        WHERE ID_inventario = %s
+    """, (inventario_id,))
+    numero_itens = cursor.fetchone()[0]
+
+    # Verifica se há espaço no inventário
+    if numero_itens >= tamanho_atual:
+        imprimir_lentamente("\nSeu inventário está cheio. Não é possível pegar mais itens.")
+        return
+
+    # Verifica se existe um item na localização do jogador
+    cursor.execute("""
+        SELECT ii.ID, i.nome, i.descricao
+        FROM Instancia_Item ii
+        JOIN Item i ON ii.Item_ID = i.ID
+        WHERE ii.localizacao = (
+            SELECT localizacao
+            FROM Jogador
+            WHERE ID = %s
+        )
+    """, (personagem_escolhido,))
+    item = cursor.fetchone()
+
+    if not item:
+        imprimir_lentamente("\nNão há nenhum item disponível no local.")
+        return
+
+    item_id, nome_item, descricao_item = item
+
+    # Adiciona o item ao inventário do jogador
+    cursor.execute("""
+        INSERT INTO Inventario_item (ID_inventario, ID_item)
+        VALUES (%s, %s)
+    """, (inventario_id, item_id))
+
+    # Atualiza a localização do item para NULL (item foi retirado do local)
+    cursor.execute("""
+        UPDATE Instancia_Item
+        SET localizacao = NULL
+        WHERE ID = %s
+    """, (item_id,))
+
+    conn.commit()
+
+    imprimir_lentamente(f"\nVocê pegou o item '{nome_item}' e ele foi adicionado ao seu inventário.")
+    imprimir_lentamente("O item não está mais disponível no local.")
+
+    cursor.close()
+
+
 
 def jogo(conn, personagem_escolhido):
     while True:
@@ -397,7 +467,8 @@ def jogo(conn, personagem_escolhido):
         imprimir_lentamente("2. Interagir com o NPC local")
         imprimir_lentamente("3. Mover para outro local")
         imprimir_lentamente("4. Lutar contra o zumbi presente")
-        imprimir_lentamente("5. Sair do jogo")
+        imprimir_lentamente("5. Pegar o item disponivel")
+        imprimir_lentamente("6. Sair do jogo")
 
         escolha = input("\nEscolha uma opção: ")
 
@@ -420,15 +491,18 @@ def jogo(conn, personagem_escolhido):
             else:
                 imprimir_lentamente("\nNão há zumbis para lutar.")
         elif escolha == "5":
+            if item:
+                imprimir_lentamente("\nPegando o item presente no local")
+                pegar_item(conn, personagem_escolhido)
+            else:
+                imprimir_lentamente("\nNão há itens disponiveis")
+        elif escolha == "6":
             imprimir_lentamente("\nSaindo do jogo...")
             break
         else:
             imprimir_lentamente("\nOpção inválida. Tente novamente.")
 
     cursor.close()
-
-
-
 
 def iniciar_novo_jogo():
     conn = conectar_banco()
