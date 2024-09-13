@@ -210,7 +210,15 @@ def acessar_inventario(conn, personagem_escolhido):
 
     # Obter o ID do jogador relacionado ao personagem escolhido
     cursor.execute("SELECT ID FROM Jogador WHERE ID_personagem = %s", (personagem_escolhido,))
-    jogador_id = cursor.fetchone()[0]
+    resultado = cursor.fetchone()
+
+    # Verificar se o jogador foi encontrado
+    if resultado is None:
+        imprimir_lentamente("\nNenhum jogador encontrado com o personagem escolhido.")
+        cursor.close()
+        return
+
+    jogador_id = resultado[0]
 
     # Obter o inventário do jogador
     cursor.execute("SELECT ID, Tamanho FROM Inventario WHERE Jogador_ID = %s", (jogador_id,))
@@ -235,6 +243,18 @@ def acessar_inventario(conn, personagem_escolhido):
             imprimir_lentamente("\nItens no inventário:")
             for item in itens:
                 imprimir_lentamente(f"ID: {item[0]}, Nome: {item[1]}, Descrição: {item[2]}")
+
+            # Perguntar qual item o jogador quer usar
+            imprimir_lentamente("\nDigite o ID do item que deseja usar: ", fim="")
+            try:
+                item_escolhido = int(input())
+            except ValueError:
+                imprimir_lentamente("\nEntrada inválida. Digite um número.")
+                return
+
+            # Usar o item selecionado
+            usar_item(conn, jogador_id, item_escolhido, inventario_id)
+
         else:
             imprimir_lentamente("\nO inventário está vazio.")
     else:
@@ -242,6 +262,62 @@ def acessar_inventario(conn, personagem_escolhido):
 
     cursor.close()
 
+def usar_item(conn, jogador_id, item_id, inventario_id):
+    cursor = conn.cursor()
+
+    # Obter o tipo do item
+    cursor.execute("SELECT tipo FROM Item WHERE ID = %s", (item_id,))
+    item_tipo = cursor.fetchone()
+
+    if item_tipo is None:
+        imprimir_lentamente("\nItem não encontrado.")
+        return
+
+    item_tipo = item_tipo[0]
+
+    if item_tipo == 'consumivel':
+        # Regenerar HP com item consumível
+        cursor.execute("SELECT poder_de_regeneracao FROM Item_Consumivel WHERE ID = %s", (item_id,))
+        regeneracao = cursor.fetchone()[0]
+        cursor.execute("UPDATE Jogador SET hp = hp + %s WHERE ID = %s", (regeneracao, jogador_id))
+        imprimir_lentamente(f"\nVocê usou um item consumível e regenerou {regeneracao} de HP.")
+
+    elif item_tipo == 'equipamento':
+        # Verificar se é arma ou armadura
+        cursor.execute("SELECT tipo FROM Item_Equipamento WHERE ID = %s", (item_id,))
+        equipamento_tipo = cursor.fetchone()[0]
+
+        if equipamento_tipo == 'arma':
+            cursor.execute("SELECT poder_de_ataque FROM Item_Equipamento_Arma WHERE ID = %s", (item_id,))
+            poder_ataque = cursor.fetchone()[0]
+            cursor.execute("UPDATE Jogador SET forca = forca + %s WHERE ID = %s", (poder_ataque, jogador_id))
+            imprimir_lentamente(f"\nVocê equipou uma arma e aumentou sua força em {poder_ataque}.")
+        elif equipamento_tipo == 'armadura':
+            cursor.execute("SELECT poder_de_defesa FROM Item_Equipamento_Armadura WHERE ID = %s", (item_id,))
+            poder_defesa = cursor.fetchone()[0]
+            cursor.execute("UPDATE Jogador SET hp = hp + %s WHERE ID = %s", (poder_defesa, jogador_id))
+            imprimir_lentamente(f"\nVocê equipou uma armadura e aumentou seu HP em {poder_defesa}.")
+
+    # Agora, para remover o item corretamente, precisamos do ID da Instancia_Item que pertence a esse inventário específico
+    cursor.execute("""
+        SELECT inst.ID 
+        FROM Instancia_Item inst
+        JOIN Inventario_item ii ON inst.ID = ii.ID_item
+        WHERE inst.Item_ID = %s AND ii.ID_inventario = %s
+    """, (item_id, inventario_id))
+
+    instancia_item_id = cursor.fetchone()
+
+    if instancia_item_id:
+        instancia_item_id = instancia_item_id[0]
+        cursor.execute("DELETE FROM Inventario_item WHERE ID_item = %s AND ID_inventario = %s", (instancia_item_id, inventario_id))
+        imprimir_lentamente(f"\nO item foi removido do seu inventário.")
+
+    conn.commit()
+    cursor.close()
+
+
+    
 def interagir_com_npc(conn, jogador_id):
     cursor = conn.cursor()
 

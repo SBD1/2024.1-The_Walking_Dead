@@ -60,14 +60,26 @@ VALUES
 (2, 'Michonne', 'Feminino', 1000, 'Vivo', 'Fazenda'),
 (3, 'Daryl Dixon', 'Masculino', 1800, 'Vivo', 'Floresta'),
 (4, 'Negan', 'Masculino', 1500, 'Vivo', 'Cidade'),
-(5, 'Fazendeiro', 'Masculino', 1000, 'Vivo', 'Fazenda');
+(5, 'Fazendeiro', 'Masculino', 1000, 'Vivo', 'Fazenda'),
+(6, 'Governador', 'Masculino', 1500, 'Vivo', 'Pátio da Prisão'),
+(7, 'Gleen Rhee', 'Masculino', 1000, 'Vivo', 'Cabana Abandonada'),
+(8, 'Maggie Greene', 'Feminino', 1000, 'Vivo', 'Cabana Abandonada'),
+(9, 'Sasha Williams', 'Feminino', 1000, 'Vivo', 'Praça Central de Woodbury'),
+(10, 'Abraham', 'Masculino', 2000, 'Vivo', 'Praça Central de Woodbury'),
+(11, 'Carl Grimes', 'Masculino', 1000, 'Vivo', 'Fazenda'),
+(12, 'Rosita Espinosa', 'Feminino', 1000, 'Vivo', 'Bloco C');
 
 INSERT INTO NPC (ID, funcao, dialogo)
 VALUES
-(2, 'Daryl', 'Estou com depressao'),  -- Daryl
-(4, 'Líder dos Salvadores', 'Aqui as coisas são feitas do meu jeito.'),  -- Negan
-(5, 'Fazendeiro', 'Vamos começar os trabalhos.');  -- Fazendeiro
-
+(3, 'Daryl', 'Estou com depressao'),
+(4, 'Líder dos Salvadores', 'Aqui as coisas são feitas do meu jeito.'),
+(5, 'Fazendeiro', 'Vamos começar os trabalhos.'),  
+(6, 'Lider de Alexandria', 'Hora de tomar essa prisão'),
+(8, 'Exploradora', 'O que será que eu irei achar aqui?'),
+(9, 'Soldada', 'Irei defender minha cidade'),
+(10, 'Soldado', 'Vou proteger a Sasha a qualquer custo'),
+(11, 'Filho do Rick', 'Vou reclamar com meu pai'),
+(12, 'Coadjunvante', 'Vou morrer para o Negan em 2 temporadas');
 INSERT INTO Regiao (ID, nome, descricao) 
 VALUES 
 (1, 'Atlanta', 'A cidade devastada de Atlanta, cheia de arranha-céus abandonados e ruas perigosas.'),
@@ -100,14 +112,54 @@ VALUES
 (1, 40, 30, 50),
 (2, 50, 20, 75),
 (3, 60, 25, 60),
-(4, 55, 35, 65);
+(4, 55, 35, 65),
+(5, 80, 30, 50),
+(6, 90, 20, 75),
+(7, 30, 25, 60),
+(8, 100, 35, 65),
+(9, 350, 30, 50),
+(10, 30, 20, 75),
+(11, 70, 25, 60),
+(12, 55, 35, 65),
+(13, 40, 30, 50),
+(14, 50, 20, 75),
+(15, 800, 25, 100),
+(16, 53, 35, 65),
+(17, 43, 30, 50),
+(18, 56, 20, 75),
+(19, 64, 25, 60),
+(20, 55, 35, 65),
+(21, 40, 30, 50),
+(22, 50, 20, 75),
+(23, 60, 25, 60),
+(24, 55, 35, 65);
 
 INSERT INTO Instancia_Zumbi (ID_Zumbi, estado, localizacao)
 VALUES
 (1, 'Ativo', 'Floresta'),
 (2, 'Ativo', 'Fazenda'),
 (3, 'Inativo', 'Cidade'),
-(4, 'Ativo', 'Posto de Controle');
+(4, 'Ativo', 'Posto de Controle'),
+(5, 'Ativo', 'Centro de Atlanta'),
+(6, 'Ativo', 'Subúrbios de Atlanta'),
+(7, 'Ativo', 'Bloco C'),
+(8, 'Ativo', 'Pátio da Prisão'),
+(9, 'Ativo', 'Cabana Abandonada'),
+(10, 'Ativo', 'Rio Congelado'),
+(11, 'Ativo', 'Praça Central de Woodbury'),
+(12, 'Ativo', 'Muralha de Woodbury'),
+(13, 'Ativo', 'Centro de Atlanta'),
+(14, 'Ativo', 'Subúrbios de Atlanta'),
+(15, 'Ativo', 'Bloco C'),
+(16, 'Ativo', 'Pátio da Prisão'),
+(17, 'Ativo', 'Cabana Abandonada'),
+(18, 'Ativo', 'Rio Congelado'),
+(19, 'Ativo', 'Praça Central de Woodbury'),
+(20, 'Ativo', 'Muralha de Woodbury'),
+(21, 'Ativo', 'Centro de Atlanta'),
+(22, 'Ativo', 'Subúrbios de Atlanta'),
+(23, 'Ativo', 'Bloco C'),
+(24, 'Ativo', 'Pátio da Prisão');
 
 INSERT INTO Instancia_Item (ID, Item_ID, localizacao)
 VALUES

@@ -1,37 +1,39 @@
--- Atualizar inventário
-BEGIN;
+-- Atualizar inventário quando um item for adicionado ou atualizado no Inventario_item
 CREATE OR REPLACE FUNCTION atualizar_inventario()
 RETURNS TRIGGER AS $$
 BEGIN
-    -- Verifica se o item já está no inventário do personagem
+    -- Verifica se o item já está no inventário do jogador
     IF EXISTS (
         SELECT 1
-        FROM Inventario
-        WHERE Personagem_ID = NEW.Personagem_ID
-          AND instancia_item_id = NEW.instancia_item_id
+        FROM Inventario_item
+        WHERE ID_inventario = NEW.ID_inventario
+          AND ID_item = NEW.ID_item
     ) THEN
-        -- Atualiza o tamanho do item no inventário
+        -- Atualiza a quantidade do item no inventário
         UPDATE Inventario
-        SET Tamanho = Tamanho + NEW.Tamanho
-        WHERE Personagem_ID = NEW.Personagem_ID
-          AND instancia_item_id = NEW.instancia_item_id;
+        SET Tamanho = Tamanho + 1
+        WHERE ID = NEW.ID_inventario;
     ELSE
-        -- Adiciona o item ao inventário
-        INSERT INTO Inventario (instancia_item_id, Personagem_ID, Tamanho)
-        VALUES (NEW.instancia_item_id, NEW.Personagem_ID, NEW.Tamanho);
+        -- Caso não exista, o item é adicionado ao inventário
+        INSERT INTO Inventario_item (ID_inventario, ID_item)
+        VALUES (NEW.ID_inventario, NEW.ID_item);
+        
+        -- Incrementa o tamanho do inventário
+        UPDATE Inventario
+        SET Tamanho = Tamanho + 1
+        WHERE ID = NEW.ID_inventario;
     END IF;
 
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
-
--- Trigger
-
+-- Trigger para atualizar o inventário após inserção de um item
 CREATE TRIGGER trigger_atualizar_inventario
-AFTER INSERT ON Inventario
+AFTER INSERT ON Inventario_item
 FOR EACH ROW
 EXECUTE FUNCTION atualizar_inventario();
+
 
 ---------------------------------------------------------------------
 
@@ -82,7 +84,7 @@ CREATE OR REPLACE FUNCTION respawn_zumbi()
 RETURNS TRIGGER AS $$
 BEGIN
     -- Respawn de um novo zumbi após o jogador sair do local
-    INSERT INTO instancia_zumbi (id_zumbi, status, localizacao)
+    INSERT INTO instancia_zumbi (id_zumbi, estado, localizacao)
     VALUES (1, 'Ativo', OLD.localizacao); -- Respawn de um zumbi do tipo 1 no local
 
     RAISE NOTICE 'Novo zumbi criado no local % após a saída do jogador %.', OLD.localizacao, OLD.ID;
@@ -97,6 +99,7 @@ AFTER UPDATE OF localizacao OR DELETE ON Jogador
 FOR EACH ROW
 WHEN (OLD.localizacao IS NOT NULL) -- Apenas quando o jogador sair de um local
 EXECUTE FUNCTION respawn_zumbi();
+
 
 
 ---------------------------------------------------------------------
