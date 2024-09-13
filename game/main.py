@@ -255,12 +255,12 @@ def interagir_com_npc(conn, jogador_id):
 
     localizacao_jogador = jogador[0]
 
-    # Verificar se há um NPC na mesma localização
+    # Verificar se há um NPC (ID > 2) na mesma localização
     cursor.execute("""
-        SELECT n.id, n.nome, n.dialogo
+        SELECT n.id, i.nome, n.dialogo
         FROM NPC n
-        JOIN Personagem i ON n.id = i.ID_NPC
-        WHERE i.localizacao = %s
+        JOIN Personagem i ON n.id = i.ID
+        WHERE i.localizacao = %s AND n.ID > 2
     """, (localizacao_jogador,))
     npc = cursor.fetchone()
 
@@ -273,41 +273,41 @@ def interagir_com_npc(conn, jogador_id):
     imprimir_lentamente(f"\nVocê encontrou o NPC {npc_nome} em {localizacao_jogador}!")
     imprimir_lentamente(f"{npc_nome} diz: {npc_dialogo}")
 
-    # Listar missões disponíveis
-    cursor.execute("""
-        SELECT m.ID, m.nome, m.descricao, m.tipo, m.premio
-        FROM Missao m
-        JOIN Instancia_Missao im ON m.ID = im.ID_Missao
-        WHERE im.ID_NPC = %s AND im.estado = 'Disponível'
-    """, (npc_id,))
-    missoes = cursor.fetchall()
+    if(npc_id == 5):
+        # Listar missões disponíveis associadas ao NPC
+        cursor.execute("""
+            SELECT m.ID, m.nome, m.descricao, m.tipo, m.premio
+            FROM Missao m
+        """, (npc_id,))
+        missoes = cursor.fetchall()
 
-    if not missoes:
-        imprimir_lentamente("\nNão há missões disponíveis com este NPC.")
-        return
+        if not missoes:
+            imprimir_lentamente("\nNão há missões disponíveis com este NPC.")
+            return
 
-    imprimir_lentamente("\nMissões disponíveis:")
-    for missao in missoes:
-        missao_id, nome, descricao, tipo, premio = missao
-        imprimir_lentamente(f"ID: {missao_id}, Nome: {nome}, Descrição: {descricao}, Tipo: {tipo}, Prêmio: {premio}")
+        imprimir_lentamente("\nMissões disponíveis:")
+        for missao in missoes:
+            missao_id, nome, descricao, tipo, premio = missao
+            imprimir_lentamente(f"ID: {missao_id}, Nome: {nome}, Descrição: {descricao}, Tipo: {tipo}, Prêmio: {premio}")
 
-    # Escolher missão
-    try:
-        imprimir_lentamente("\nDigite o ID da missão que deseja aceitar: ", fim='')
-        missao_escolhida = int(input())
-    except ValueError:
-        imprimir_lentamente("Entrada inválida. Por favor, digite um número.")
-        return
+        # Escolher missão
+        try:
+            imprimir_lentamente("\nDigite o ID da missão que deseja aceitar: ", fim='')
+            missao_escolhida = int(input())
+        except ValueError:
+            imprimir_lentamente("Entrada inválida. Por favor, digite um número.")
+            return
 
-    # Verificar se a missão escolhida está disponível
-    if any(m[0] == missao_escolhida for m in missoes):
-        cursor.execute("UPDATE Instancia_Missao SET estado = 'Aceita' WHERE ID_Missao = %s AND ID_NPC = %s", (missao_escolhida, npc_id))
-        conn.commit()
-        imprimir_lentamente(f"\nVocê aceitou a missão '{missao_escolhida}' com sucesso!")
-    else:
-        imprimir_lentamente("\nMissão inválida. Tente novamente.")
+        # Verificar se a missão escolhida está disponível
+        if any(m[0] == missao_escolhida for m in missoes):
+            imprimir_lentamente(f"\nVocê aceitou a missão '{missao_escolhida}' com sucesso!")
+        else:
+            imprimir_lentamente("\nMissão inválida. Tente novamente.")
+    
 
     cursor.close()
+
+
 
 def pegar_item(conn, personagem_escolhido):
     cursor = conn.cursor()
