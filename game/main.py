@@ -259,7 +259,7 @@ def interagir_com_npc(conn, jogador_id):
     cursor.execute("""
         SELECT n.id, n.nome, n.dialogo
         FROM NPC n
-        JOIN Instancia_NPC i ON n.id = i.ID_NPC
+        JOIN Personagem i ON n.id = i.ID_NPC
         WHERE i.localizacao = %s
     """, (localizacao_jogador,))
     npc = cursor.fetchone()
