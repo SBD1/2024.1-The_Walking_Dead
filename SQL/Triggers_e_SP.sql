@@ -1,4 +1,5 @@
 -- Atualizar inventário
+BEGIN;
 CREATE OR REPLACE FUNCTION atualizar_inventario()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -32,11 +33,6 @@ AFTER INSERT ON Inventario
 FOR EACH ROW
 EXECUTE FUNCTION atualizar_inventario();
 
--- Testando Trigger
-
-INSERT INTO EventoColeta (Personagem_ID, instancia_item_id, tamanho)
-VALUES (123, 2, 10);
-
 ---------------------------------------------------------------------
 
 -- Função Trigger para atualizar a localização do personagem
@@ -58,12 +54,6 @@ AFTER UPDATE OF Localizacao ON Personagem
 FOR EACH ROW
 EXECUTE FUNCTION atualizar_localizacao_personagem();
 
--- Testando Trigger
--- Atualizar a localização de Rick Grimes
-
-UPDATE Personagem
-SET Localizacao = 'Cidade'
-WHERE Nome = 'Rick Grimes';
 
 ---------------------------------------------------------------------
 
@@ -86,32 +76,28 @@ AFTER DELETE ON Zumbi
 FOR EACH ROW
 EXECUTE FUNCTION eliminar_zumbi();
 
--- Testando Trigger
 
-DELETE FROM instancia_zumbi WHERE id_zumbi = 1;
-DELETE FROM Zumbi WHERE id = 1;
-
-CREATE OR REPLACE FUNCTION respawn_zumbi(jogador_id INT, local_id INT)
-RETURNS VOID AS $$
-DECLARE
-    local_nome VARCHAR;
+-- Função para gerar um zumbi após o jogador sair de um local
+CREATE OR REPLACE FUNCTION respawn_zumbi()
+RETURNS TRIGGER AS $$
 BEGIN
-    -- Recupera o nome do local
-    SELECT nome INTO local_nome FROM local WHERE id = local_id;
-
     -- Respawn de um novo zumbi após o jogador sair do local
     INSERT INTO instancia_zumbi (id_zumbi, status, localizacao)
-    VALUES (1, 'Ativo', local_nome); -- Respawn de um zumbi do tipo 1 no local
+    VALUES (1, 'Ativo', OLD.localizacao); -- Respawn de um zumbi do tipo 1 no local
 
-    RAISE NOTICE 'Novo zumbi criado no local % após a saída do jogador %.', local_nome, jogador_id;
+    RAISE NOTICE 'Novo zumbi criado no local % após a saída do jogador %.', OLD.localizacao, OLD.ID;
+    
+    RETURN NULL;
 END;
 $$ LANGUAGE plpgsql;
 
+-- Trigger para respawn de zumbi quando o jogador sair de um local
 CREATE TRIGGER trigger_respawn_zumbi
-AFTER DELETE OR UPDATE ON jogador_local 
+AFTER UPDATE OF localizacao OR DELETE ON Jogador
 FOR EACH ROW
-WHEN (OLD.local_id IS NOT NULL) -- Apenas quando o jogador sair de um local
-EXECUTE FUNCTION respawn_zumbi(OLD.jogador_id, OLD.local_id);
+WHEN (OLD.localizacao IS NOT NULL) -- Apenas quando o jogador sair de um local
+EXECUTE FUNCTION respawn_zumbi();
+
 
 ---------------------------------------------------------------------
 CREATE OR REPLACE PROCEDURE MatarPersonagem(IN p_ID INT)
@@ -259,3 +245,5 @@ CREATE TRIGGER trigger_verificar_tipo_local
 BEFORE INSERT OR UPDATE ON Local
 FOR EACH ROW
 EXECUTE FUNCTION verificar_tipo_local();
+
+commit;
