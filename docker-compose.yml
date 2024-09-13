@@ -12,8 +12,8 @@ services:
       POSTGRES_DB: the_walking_dead 
     volumes:
       - ./SQL/DDL.sql:/docker-entrypoint-initdb.d/0DDL.sql
-      - ./SQL/DML.sql:/docker-entrypoint-initdb.d/1DML.sql
-      - ./SQL/Triggers_e_SP.SQL:/docker-entrypoint-initdb.d/2Triggers_e_SP.SQL
+      - ./SQL/Triggers_e_SP.sql:/docker-entrypoint-initdb.d/1Triggers_e_SP.sql
+      - ./SQL/DML.sql:/docker-entrypoint-initdb.d/2DML.sql
       - ./SQL/create_user.sql:/docker-entrypoint-initdb.d/3create_user.sql
     expose:
       - "5432"

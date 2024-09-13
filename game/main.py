@@ -242,7 +242,6 @@ def acessar_inventario(conn, personagem_escolhido):
 
     cursor.close()
 
-
 def interagir_com_npc(conn, jogador_id):
     cursor = conn.cursor()
 
@@ -306,8 +305,6 @@ def interagir_com_npc(conn, jogador_id):
     
 
     cursor.close()
-
-
 
 def pegar_item(conn, personagem_escolhido):
     cursor = conn.cursor()
@@ -377,8 +374,6 @@ def pegar_item(conn, personagem_escolhido):
     imprimir_lentamente("O item não está mais disponível no local.")
 
     cursor.close()
-
-
 
 def jogo(conn, personagem_escolhido):
     while True:
@@ -549,7 +544,6 @@ def carregar_jogo():
         return None
     finally:
         cursor.close()
-
 
 def fechar_jogo():
     print("\nSaindo do jogo... Até mais!")
