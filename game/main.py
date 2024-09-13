@@ -378,6 +378,42 @@ def pegar_item(conn, personagem_escolhido):
 
     cursor.close()
 
+# Função principal para realizar a missão
+def realizar_missao(missao, jogador):
+    if missao['tipo_missao'] == 'combate':
+        # Lógica de combate (lutar contra zumbi)
+        oponente = encontrar_oponente(missao['id_oponente'])
+        if lutar_contra_zumbi(jogador, oponente):
+            print("Missão de combate realizada com sucesso!")
+            return True
+        else:
+            print("Você falhou na missão de combate.")
+            return False
+
+    elif missao['tipo_missao'] == 'busca':
+        # Lógica de busca de item
+        item = pegar_item(missao['item_descrito'])
+        if pegar_item(jogador, item):
+            print(f"Você encontrou o item {item['nome']} e completou a missão!")
+            return True
+        else:
+            print("Item não encontrado. Missão falhou.")
+            return False
+
+    elif missao['tipo_missao'] == 'dialogo':
+        # Lógica de diálogo para missão
+        npc = interagir_com_npc(missao['npc_descrito'])
+        if interagir_para_missao(jogador, npc):
+            print(f"Você dialogou com {npc['nome']} e completou a missão!")
+            return True
+        else:
+            print("Falha ao completar a missão de diálogo.")
+            return False
+
+    else:
+        print("Tipo de missão desconhecido.")
+        return False
+
 
 
 def jogo(conn, personagem_escolhido):
