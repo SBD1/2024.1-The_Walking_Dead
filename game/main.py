@@ -9,7 +9,7 @@ def limpar_tela():
     else:  # Linux e macOS
         os.system('clear')
 
-def imprimir_lentamente(texto, delay=0.01, fim='\n'):
+def imprimir_lentamente(texto, delay=0.015, fim='\n'):
     for char in texto:
         sys.stdout.write(char)
         sys.stdout.flush()
@@ -315,8 +315,6 @@ def usar_item(conn, jogador_id, item_id, inventario_id):
 
     conn.commit()
     cursor.close()
-
-
     
 def interagir_com_npc(conn, jogador_id):
     cursor = conn.cursor()
@@ -451,9 +449,8 @@ def pegar_item(conn, personagem_escolhido):
 
     cursor.close()
 
-
-
 def jogo(conn, personagem_escolhido):
+    limpar_tela()
     while True:
         cursor = conn.cursor()
 
@@ -546,30 +543,36 @@ def jogo(conn, personagem_escolhido):
         escolha = input("\nEscolha uma opção: ")
 
         if escolha == "1":
+            limpar_tela()
             imprimir_lentamente("\nAcessando o inventário...")
             acessar_inventario(conn, personagem_escolhido)
         elif escolha == "2":
+            limpar_tela()
             if npc:
                 imprimir_lentamente("\nInteragindo com o NPC local...")
                 interagir_com_npc(conn, personagem_escolhido)
             else:
                 imprimir_lentamente("\nNão há NPCs para interagir.")
         elif escolha == "3":
+            limpar_tela()
             imprimir_lentamente("\nMovendo-se para outro local...")
             mover_para_local(conn, personagem_escolhido)
         elif escolha == "4":
+            limpar_tela()
             if zumbi:
                 imprimir_lentamente("\nLutando contra o zumbi presente...")
                 lutar_contra_zumbi(conn, personagem_escolhido)
             else:
                 imprimir_lentamente("\nNão há zumbis para lutar.")
         elif escolha == "5":
+            limpar_tela()
             if item:
                 imprimir_lentamente("\nPegando o item presente no local")
                 pegar_item(conn, personagem_escolhido)
             else:
                 imprimir_lentamente("\nNão há itens disponiveis")
         elif escolha == "6":
+            limpar_tela()
             imprimir_lentamente("\nSaindo do jogo...")
             break
         else:
